@@ -5,32 +5,20 @@ import javax.transaction.Transactional;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.niit.model.Blog;
-import com.niit.model.BlogComment;
 
-@Repository("blogDAO")
-public class BlogDAOImpl implements BlogDAO {
+import com.niit.model.Forum;
+import com.niit.model.ForumComment;
+
+@Repository("forumDAO")
+public class ForumDAOImpl implements ForumDAO {
 	@Autowired
 	SessionFactory sessionFactory;
 	
 	@Transactional
 	@Override
-	public boolean addBlog(Blog blog) {
+	public boolean addForum(Forum forum) {
 		try {
-			sessionFactory.getCurrentSession().save(blog);
-			return true;
-		}catch(Exception e) {
-			System.out.println("There is an exception here! \n"+e);
-			return false;
-		}
-	}
-
-	@Transactional
-	@Override
-	public boolean deleteBlog(Blog blog) {
-		try {
-			blog.setStatus("Disabled");
-			sessionFactory.getCurrentSession().update(blog);
+			sessionFactory.getCurrentSession().save(forum);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -40,9 +28,23 @@ public class BlogDAOImpl implements BlogDAO {
 	
 	@Transactional
 	@Override
-	public boolean updateBlog(Blog blog) {
+	public boolean deleteForum(Forum forum) {
 		try {
-			sessionFactory.getCurrentSession().update(blog);
+			forum.setStatus("Disabled");
+			sessionFactory.getCurrentSession().update(forum);
+			return true;
+		}catch(Exception e) {
+			System.out.println("There is an exception here! \n"+e);
+			return false;
+		}
+	}
+	
+
+	@Transactional
+	@Override
+	public boolean updateForum(Forum forum) {
+		try {
+			sessionFactory.getCurrentSession().update(forum);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -53,10 +55,10 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<Blog> blogListUser(String loginName) {
+	public List<Forum> forumListUser(String loginName) {
 		try {
-			String hql = "from Blog where loginName='"+loginName+"' and status!="+"'Disabled'";
-			return (List<Blog>)sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql = "from Forum where loginName='"+loginName+"' and status!="+"'Disabled'";
+			return (List<Forum>)sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -65,10 +67,10 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Transactional
 	@Override
-	public boolean approveBlog(Blog blog) {
+	public boolean approveForum(Forum forum) {
 		try {
-			blog.setStatus("Approved");
-			sessionFactory.getCurrentSession().update(blog);
+			forum.setStatus("Approved");
+			sessionFactory.getCurrentSession().update(forum);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -78,10 +80,10 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Transactional
 	@Override
-	public boolean rejectBlog(Blog blog) {
+	public boolean rejectForum(Forum forum) {
 		try {
-			blog.setStatus("Unapproved");
-			sessionFactory.getCurrentSession().update(blog);
+			forum.setStatus("Unapproved");
+			sessionFactory.getCurrentSession().update(forum);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -91,9 +93,9 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Transactional
 	@Override
-	public Blog getBlog(int blogId) {
+	public Forum getForum(int forumId) {
 		try {
-			return (Blog)sessionFactory.getCurrentSession().get(Blog.class,blogId);
+			return (Forum)sessionFactory.getCurrentSession().get(Forum.class,forumId);
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -103,10 +105,10 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<Blog> blogList() {
+	public List<Forum> forumList() {
 		try {
-			String hql = "from Blog where status !="+"'Disabled'";
-			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql = "from Forum where status !="+"'Disabled'";
+			return (List<Forum>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -114,12 +116,12 @@ public class BlogDAOImpl implements BlogDAO {
 	}
 	@Transactional
 	@Override
-	public boolean incrementLikes(Blog blog) {
+	public boolean incrementLikes(Forum forum) {
 		try {
-			int likes = blog.getLikes();
+			int likes = forum.getLikes();
 			likes++;
-			blog.setLikes(likes);
-			sessionFactory.getCurrentSession().update(blog);
+			forum.setLikes(likes);
+			sessionFactory.getCurrentSession().update(forum);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -130,10 +132,10 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<Blog> getUnapprovedBlogs() {
+	public List<Forum> getUnapprovedForums() {
 		try {
-			String hql="from Blog where status="+"'Unapproved'";
-			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql="from Forum where status="+"'Unapproved'";
+			return (List<Forum>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -143,10 +145,10 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<Blog> getApprovedBlogs() {
+	public List<Forum> getApprovedForums() {
 		try {
-			String hql="from Blog where status="+"'Approved'";
-			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql="from Forum where status="+"'Approved'";
+			return (List<Forum>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -156,10 +158,10 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<Blog> getToBeApprovedBlogs() {
+	public List<Forum> getToBeApprovedForums() {
 		try {
-			String hql="from Blog where status="+"'create'";
-			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql="from Forum where status="+"'create'";
+			return (List<Forum>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		} catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -168,10 +170,10 @@ public class BlogDAOImpl implements BlogDAO {
 	
 	@Transactional
 	@Override
-	public boolean addBlogComment(BlogComment blogComment) {
+	public boolean addForumComment(ForumComment forumComment) {
 		try {
-			blogComment.setStatus("posted");
-			sessionFactory.getCurrentSession().save(blogComment);
+			forumComment.setStatus("posted");
+			sessionFactory.getCurrentSession().save(forumComment);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -181,10 +183,10 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Transactional
 	@Override
-	public boolean deleteBlogComment(BlogComment blogComment) {
+	public boolean deleteForumComment(ForumComment forumComment) {
 		try {
-			blogComment.setStatus("removed");
-			sessionFactory.getCurrentSession().update(blogComment);
+			forumComment.setStatus("removed");
+			sessionFactory.getCurrentSession().update(forumComment);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -194,9 +196,9 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Transactional
 	@Override
-	public boolean editBlogComment(BlogComment blogComment) {
+	public boolean editForumComment(ForumComment forumComment) {
 		try {
-			sessionFactory.getCurrentSession().update(blogComment);
+			sessionFactory.getCurrentSession().update(forumComment);
 			return true;
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -206,9 +208,9 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Transactional
 	@Override
-	public BlogComment getComment(int commentId) {
+	public ForumComment getComment(int commentId) {
 		try {
-			return (BlogComment)sessionFactory.getCurrentSession().get(BlogComment.class,commentId);
+			return (ForumComment)sessionFactory.getCurrentSession().get(ForumComment.class,commentId);
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -218,10 +220,10 @@ public class BlogDAOImpl implements BlogDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<BlogComment> getBlogComments(int blogId) {
+	public List<ForumComment> getForumComments(int forumId) {
 		try {
-			String hql="from BlogComment where status="+"'posted'"+" and blogId="+blogId;
-			return (List<BlogComment>) sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql="from ForumComment where status="+"'posted'"+" and forumId="+forumId;
+			return (List<ForumComment>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		} catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;

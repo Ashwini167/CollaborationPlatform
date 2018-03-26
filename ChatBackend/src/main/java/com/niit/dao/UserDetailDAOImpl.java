@@ -1,8 +1,6 @@
 package com.niit.dao;
 
 import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,12 +16,12 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	@Override
 	public boolean addUserDetail(UserDetail userDetail) {
 		try {
+			userDetail.setEnabled("Yes");
+			userDetail.setRole("ROLE_USER");
 			sessionFactory.getCurrentSession().save(userDetail);
 			return true;
-		}
-		catch(Exception e) {
-			System.out.println("There is an exception here! The details are: \n =================================");
-			System.out.println(e);
+		} catch(Exception e) {
+			System.out.println("There is an exception here! \n"+e);
 			return false;
 		}
 	}
@@ -32,30 +30,28 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	@Override
 	public boolean deleteUserDetail(UserDetail userDetail) {
 		try {
-			sessionFactory.getCurrentSession().delete(userDetail);
+			userDetail.setEnabled("No");
+			sessionFactory.getCurrentSession().update(userDetail);
 			return true;
-		}
-		catch(Exception e) {
-			System.out.println("There is an exception here! The details are: \n =================================");
-			System.out.println(e);
+		} catch(Exception e) {
+			System.out.println("There is an exception here! \n"+e);
 			return false;
 		}
 	}
+	
 	@Transactional
 	@Override
 	public boolean updateUserDetail(UserDetail userDetail) {
 		try {
 			sessionFactory.getCurrentSession().update(userDetail);
 			return true;
-		}
-		catch(Exception e) {
-			System.out.println("There is an exception here! The details are: \n =================================");
-			System.out.println(e);
+		} catch(Exception e) {
+			System.out.println("There is an exception here! \n"+e);
 			return false;
 		}
 	}
 
-	@Override
+	/*@Override
 	public UserDetail viewUserDetailByEmail(String emailId) {
 		Session session=sessionFactory.openSession();
 		//UserDetail userDetail=(UserDetail)session.get(UserDetail.class,emailId);
@@ -63,22 +59,29 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 		UserDetail userDetail=(UserDetail)query.uniqueResult();
 		session.close();
 		return userDetail;
-	}
+	}*/
 
+	@Transactional
 	@Override
 	public UserDetail viewUserDetailByloginName(String loginName) {
-		Session session=sessionFactory.openSession();
-		Query query = session.createQuery("from UserDetail where loginName='"+loginName+"'");
-		UserDetail userDetail=(UserDetail)query.uniqueResult();
-		session.close();
-		return userDetail;
+		try {
+			String hql = "from UserDetail where loginName='"+loginName+"'";
+			return (UserDetail)sessionFactory.getCurrentSession().createQuery(hql).uniqueResult();
+		} catch(Exception e) {
+			System.out.println("There is an exception here! \n"+e);
+			return null;
+		}		
 	}
 
+	@SuppressWarnings("unchecked")
+	@Transactional
 	@Override
 	public List<UserDetail> listUserDetails() {
-		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("from UserDetail");
-		List<UserDetail> listUserDetails = (List<UserDetail>)query.list();
-		return listUserDetails;		
+		try {
+			return (List<UserDetail>)sessionFactory.getCurrentSession().createQuery("from UserDetail where enabled='Yes'").list();
+		} catch(Exception e) {
+			System.out.println("There is an exception here! \n"+e);
+			return null;
+		}	
 	}	
 }

@@ -24,7 +24,6 @@ public class BlogUnitTest {
 		context.scan("com.niit");
 		context.refresh();
 		blogDAO = (BlogDAO) context.getBean("blogDAO");
-		//context.close();
 	}
 	
 	@Ignore
@@ -204,7 +203,6 @@ public class BlogUnitTest {
 		BlogComment comment = new BlogComment();
 		comment.setCommentText("Meaningful post. Thanks for your contribution");
 		comment.setCommentDate(new Date());
-		comment.setStatus("posted");
 		comment.setBlog(blog);
 		comment.setUserDetail(userDetail);
 		
@@ -243,6 +241,5 @@ public class BlogUnitTest {
 			System.out.print(comment.getCommentId()+"\t");
 			System.out.println(comment.getCommentText());
 		}
-	}
-	
+	}	
 }

@@ -46,6 +46,11 @@ public class DBConfig {
 			factoryBuilder.addAnnotatedClass(Blog.class);
 			factoryBuilder.addAnnotatedClass(UserDetail.class);
 			factoryBuilder.addAnnotatedClass(BlogComment.class);
+			factoryBuilder.addAnnotatedClass(Forum.class);
+			factoryBuilder.addAnnotatedClass(ForumComment.class);
+			factoryBuilder.addAnnotatedClass(Job.class);
+			factoryBuilder.addAnnotatedClass(ApplyJob.class);
+			factoryBuilder.addAnnotatedClass(Friend.class);
 			
 			factoryBuilder.addProperties(hibernateProp);			
 			System.out.println("Creating SessionFactory Bean");
@@ -71,5 +76,26 @@ public class DBConfig {
 		public UserDetailDAO getUserDetailDAO()	{
 			System.out.println("----UserDetailDAO bean creation---");
 			return new UserDetailDAOImpl();
+		}
+		
+		/* Method to create the bean of ForumDAO */
+		@Bean(name="forumDAO")
+		public ForumDAO getForumDAO()	{
+			System.out.println("----ForumDAO bean creation---");
+			return new ForumDAOImpl();
+		}
+		
+		/* Method to create the bean of JobDAO */
+		@Bean(name="jobDAO")
+		public JobDAO getJobDAO()	{
+			System.out.println("----JobDAO bean creation---");
+			return new JobDAOImpl();
+		}
+		
+		/* Method to create the bean of FriendDAO */
+		@Bean(name="friendDAO")
+		public FriendDAO getFriendDAO()	{
+			System.out.println("----FriendDAO bean creation---");
+			return new FriendDAOImpl();
 		}
 }

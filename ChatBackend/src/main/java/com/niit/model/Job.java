@@ -1,25 +1,38 @@
 package com.niit.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table
+@SequenceGenerator(name="jobIdSeq", sequenceName="JOB_ID_SEQ")
 public class Job {
 	@Id
-	private String jobId;
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="jobIdSeq")
+	@Column(name="jobId")
+	private int jobId;
 	
 	private String jobDesignation;
 	private String company;
-	private int salary;
+	private String salary;
 	private String location;
+	@Column(length=250)
 	private String jobDesc;
+	private String skillSet;
+	private String status;
+	private Date jobPostedOn;
 	
-	public String getJobId() {
+	public int getJobId() {
 		return jobId;
 	}
-	public void setJobId(String jobId) {
+	public void setJobId(int jobId) {
 		this.jobId = jobId;
 	}
 	public String getJobDesignation() {
@@ -34,10 +47,10 @@ public class Job {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	public int getSalary() {
+	public String getSalary() {
 		return salary;
 	}
-	public void setSalary(int salary) {
+	public void setSalary(String salary) {
 		this.salary = salary;
 	}
 	public String getLocation() {
@@ -51,5 +64,23 @@ public class Job {
 	}
 	public void setJobDesc(String jobDesc) {
 		this.jobDesc = jobDesc;
+	}
+	public String getSkillSet() {
+		return skillSet;
+	}
+	public void setSkillSet(String skillSet) {
+		this.skillSet = skillSet;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public Date getJobPostedOn() {
+		return jobPostedOn;
+	}
+	public void setJobPostedOn(Date jobPostedOn) {
+		this.jobPostedOn = jobPostedOn;
 	}
 }

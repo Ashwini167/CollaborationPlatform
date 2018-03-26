@@ -1,25 +1,35 @@
 package com.niit.model;
 
 import java.util.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table
+@SequenceGenerator(name="ForumIdSeq", sequenceName="FORUM_ID_SEQ")
 public class Forum {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="ForumIdSeq")
+	@Column(name="forumId")
 	private int forumId;
 	
 	private String forumName;
 	private String forumContent;
 	private Date createdDate;
 	private int likes;
-	private String loginName;
 	private String status;
+	
+	@OneToOne
+	@JoinColumn(name="loginName")
+	private UserDetail userDetail;
+	
 	
 	public int getForumId() {
 		return forumId;
@@ -51,11 +61,11 @@ public class Forum {
 	public void setLikes(int likes) {
 		this.likes = likes;
 	}
-	public String getLoginName() {
-		return loginName;
+	public UserDetail getUserDetail() {
+		return userDetail;
 	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUserDetail(UserDetail userDetail) {
+		this.userDetail = userDetail;
 	}
 	public String getStatus() {
 		return status;

@@ -13,6 +13,8 @@ public class UserDetail {
 	private String emailId;
 	private String mobileNo;
 	private String address;
+	private String enabled;
+	private String role;
 	
 	public String getLoginName() {
 		return loginName;
@@ -49,5 +51,17 @@ public class UserDetail {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public String getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}	
 }
