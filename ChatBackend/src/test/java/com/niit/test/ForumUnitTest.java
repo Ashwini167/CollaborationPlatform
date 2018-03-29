@@ -16,6 +16,7 @@ import com.niit.model.UserDetail;
 public class ForumUnitTest {
 static ForumDAO forumDAO;
 	
+	@SuppressWarnings("resource")
 	@BeforeClass
 	public static void executeFirst() {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();

@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 @SequenceGenerator(name="forumCommIdSeq", sequenceName="FORUM_COMM_ID_SEQ")
@@ -23,7 +25,8 @@ public class ForumComment {
 	private UserDetail userDetail;
 	@OneToOne
 	@JoinColumn(name="forumId")
-	private Forum forum;	
+	private Forum forum;
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="dd-MMM-yyyy")
 	private Date forumCommentDate;
 	private String status;
 	

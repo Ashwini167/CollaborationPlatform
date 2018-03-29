@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 @SequenceGenerator(name="ForumIdSeq", sequenceName="FORUM_ID_SEQ")
@@ -22,6 +24,7 @@ public class Forum {
 	
 	private String forumName;
 	private String forumContent;
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="dd-MMM-yyyy")
 	private Date createdDate;
 	private int likes;
 	private String status;

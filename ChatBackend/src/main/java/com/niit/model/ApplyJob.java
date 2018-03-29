@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 @SequenceGenerator(name="applIdSeq",sequenceName="APPLN_ID_SEQ")
@@ -25,6 +27,7 @@ public class ApplyJob {
 	@JoinColumn(name="loginName")
 	private UserDetail userDetail;
 	private String status;
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="dd-MMM-yyyy")
 	private Date appliedDate;
 	
 	public int getJobApplicationId() {

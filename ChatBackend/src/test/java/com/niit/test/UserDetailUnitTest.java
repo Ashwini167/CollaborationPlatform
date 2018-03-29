@@ -13,6 +13,7 @@ import com.niit.model.UserDetail;
 public class UserDetailUnitTest {
 	static UserDetailDAO userDetailDAO;
 
+	@SuppressWarnings("resource")
 	@BeforeClass
 	public static void executeFirst() {
 		AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();

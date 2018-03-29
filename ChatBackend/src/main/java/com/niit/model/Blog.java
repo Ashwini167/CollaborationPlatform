@@ -1,7 +1,7 @@
 package com.niit.model;
 
 import java.util.Date;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +21,8 @@ public class Blog {
 	
 	private String blogName;
 	private String blogContent;
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="dd-MMM-yyyy")
 	private Date createdDate;
 	private int likes;
 	@OneToOne

@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @SequenceGenerator(name="blogCommIdSeq",sequenceName="BLOG_COMM_ID_SEQ")
 public class BlogComment {
@@ -22,6 +24,7 @@ public class BlogComment {
 	@OneToOne
 	@JoinColumn(name="blogId")
 	private Blog blog;	
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="dd-MMM-yyyy")
 	private Date commentDate;
 	private String status;
 	
