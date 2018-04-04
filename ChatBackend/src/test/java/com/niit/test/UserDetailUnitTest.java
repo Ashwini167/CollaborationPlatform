@@ -42,18 +42,6 @@ public class UserDetailUnitTest {
 		assertTrue("Problem in Product Insertion",userDetailDAO.deleteUserDetail(userDetail));
 	}
 	
-	/*@Ignore
-	@Test
-	public void viewUserDetailByEmailTest() {
-		UserDetail user = userDetailDAO.viewUserDetailByEmail("arya@winterfell.com");
-		assertNotNull("Problem in get Product",user);
-		System.out.println("User Name is "+user.getUsername());
-		System.out.println("Name is "+user.getName());
-		System.out.println("Password is "+user.getPassword());
-		System.out.println("Mobile number is "+user.getMobileNo());
-		System.out.println("Address is "+user.getAddress());
-	}*/	
-	
 	@Ignore
 	@Test
 	public void viewUserDetailByUsernameTest() {
@@ -74,9 +62,9 @@ public class UserDetailUnitTest {
 		user.setEmailId("anuk@friend.com");
 		assertTrue("Problem in Product Insertion",userDetailDAO.updateUserDetail(user));
 	}
-		
+	@Ignore	
 	@Test
-	public void listUserDetails(){
+	public void listUserDetailsTest(){
 		List<UserDetail> listUserDetails = userDetailDAO.listUserDetails();
 		assertNotNull("Issue in listing user details..",listUserDetails);
 		
@@ -88,5 +76,13 @@ public class UserDetailUnitTest {
 			System.out.print(user.getEmailId()+"\t\t");
 			System.out.println(user.getAddress());
 		}
+	}
+	
+	@Test
+	public void authenticateUserTest() {
+		UserDetail userDetail = new UserDetail();
+		userDetail.setLoginName("Anu");
+		userDetail.setPassword("test");
+		assertTrue("Login successful",userDetailDAO.authenticateUser(userDetail));
 	}
 }

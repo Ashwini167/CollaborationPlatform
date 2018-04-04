@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="DEV_HOME" value="G:/logs" />
+
+	<appender name="debugLog" class="ch.qos.logback.core.FileAppender">
+		<file>${DEV_HOME}/debug.log</file>
+		 <filter class="ch.qos.logback.classic.filter.LevelFilter">
+     		<level>DEBUG</level>
+      		<onMatch>ACCEPT</onMatch>
+      		<onMismatch>DENY</onMismatch>
+    	</filter>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern> %d{yyyy-MM-dd HH:mm:ss} - %msg%n </Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="infoLog" class="ch.qos.logback.core.FileAppender">
+		<file>${DEV_HOME}/info.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+     		<level>INFO</level>
+      		<onMatch>ACCEPT</onMatch>
+      		<onMismatch>DENY</onMismatch>
+    	</filter>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern> %d{yyyy-MM-dd HH:mm:ss} - %msg%n </Pattern>
+		</encoder>
+	</appender>
+	
+	<root level="DEBUG">
+		<appender-ref ref="debugLog" />
+		<appender-ref ref="infoLog" />
+	</root>
+
+</configuration>

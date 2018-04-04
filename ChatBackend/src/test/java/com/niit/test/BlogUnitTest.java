@@ -175,7 +175,7 @@ public class BlogUnitTest {
 		System.out.println("========================================================================================================");
 	}
 	
-	@Ignore
+	
 	@Test
 	public void blogListUnitTest(){ 
 		List<Blog> blogList =  blogDAO.blogList();
@@ -230,7 +230,7 @@ public class BlogUnitTest {
 		BlogComment comment = blogDAO.getComment(50200);
 		assertNotNull("Problem in retrieving comment using commentId",comment);
 	}
-	
+	@Ignore
 	@Test
 	public void getBlogCommentsUnitTest() {
 		List<BlogComment> commentsList = blogDAO.getBlogComments(50400);

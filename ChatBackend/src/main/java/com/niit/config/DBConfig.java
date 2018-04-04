@@ -3,6 +3,8 @@ package com.niit.config;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +20,7 @@ import com.niit.model.*;
 @EnableTransactionManagement
 public class DBConfig {
 	
-	static {
-		System.out.println("Inside DB Config");
-	}
+	private static final Logger log = LoggerFactory.getLogger(DBConfig.class);
 		
 		/* Method used to set the parameters for Oracle connectivity */
 		@Bean(name="dataSource")
@@ -30,7 +30,7 @@ public class DBConfig {
 			dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
 			dataSource.setUsername("COLLAB");
 			dataSource.setPassword("pass");
-			System.out.println("---Data Source Created---");
+			log.info("DataSource bean created and returned");
 			return dataSource;
 		}
 		
@@ -53,49 +53,49 @@ public class DBConfig {
 			factoryBuilder.addAnnotatedClass(Friend.class);
 			
 			factoryBuilder.addProperties(hibernateProp);			
-			System.out.println("Creating SessionFactory Bean");
+			log.info("SessionFactory bean created and returned");
 			return factoryBuilder.buildSessionFactory();
 		}
 		
 		/* Method to create the bean of TransactionManager */
 		@Bean(name="txManager")
 		public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-			System.out.println("---Transaction Manager----");
+			log.info("Hibernate tranasaction manager bean created and returned");
 			return new HibernateTransactionManager(sessionFactory);
 		}
 		
 		/* Method to create the bean of BlogDAO */
 		@Bean(name="blogDAO")
 		public BlogDAO getBlogDAO()	{
-			System.out.println("----BlogDAO bean creation---");
+			log.info("BlogDAO bean created and returned");
 			return new BlogDAOImpl();
 		}
 		
 		/* Method to create the bean of UserDetailDAO */
 		@Bean(name="userDetailDAO")
 		public UserDetailDAO getUserDetailDAO()	{
-			System.out.println("----UserDetailDAO bean creation---");
+			log.info("UserDetailDAO bean created and returned");
 			return new UserDetailDAOImpl();
 		}
 		
 		/* Method to create the bean of ForumDAO */
 		@Bean(name="forumDAO")
 		public ForumDAO getForumDAO()	{
-			System.out.println("----ForumDAO bean creation---");
+			log.info("ForumDAO bean created and returned");
 			return new ForumDAOImpl();
 		}
 		
 		/* Method to create the bean of JobDAO */
 		@Bean(name="jobDAO")
 		public JobDAO getJobDAO()	{
-			System.out.println("----JobDAO bean creation---");
+			log.info("JobDAO bean created and returned");
 			return new JobDAOImpl();
 		}
 		
 		/* Method to create the bean of FriendDAO */
 		@Bean(name="friendDAO")
 		public FriendDAO getFriendDAO()	{
-			System.out.println("----FriendDAO bean creation---");
+			log.info("FriendDAO bean created and returned");
 			return new FriendDAOImpl();
 		}
 }

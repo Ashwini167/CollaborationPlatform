@@ -8,7 +8,7 @@ public interface UserDetailDAO {
 	public boolean addUserDetail(UserDetail userDetail);
 	public boolean deleteUserDetail(UserDetail userDetail);
 	public boolean updateUserDetail(UserDetail userDetail);
-	//public UserDetail viewUserDetailByEmail(String emailId);
 	public UserDetail viewUserDetailByloginName(String loginName);
 	public List<UserDetail> listUserDetails();	
+	public boolean authenticateUser(UserDetail userDetail);
 }
