@@ -1,10 +1,42 @@
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <title>Register Page</title>
 </head>
 <body>
-<h3>Please sign up:</h3>
+<div class="container" ng-controller="UserController">
+    <form class="form-horizontal" role="form" method="POST">
+        <div class="login-box col-md-5 mx-auto w-50">
+			<div class="panel content-box">
+				<div class="panel-heading">				
+					<h4 class="title-box">Sign up</h4>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<input type="text" ng-model="User.username" class="form-control" placeholder="Enter your name" required="required">
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="User.mobileNo" class="form-control" placeholder="Enter your mobile no" required="required">
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="User.emailId" class="form-control" placeholder="Enter your email Id" required="required">
+					</div>
+					<div class="form-group">
+						<textarea rows="5" ng-model="User.address" class="form-control" placeholder="Enter your address" required="required"> </textarea>
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="User.loginName" class="form-control" placeholder="Choose your login name" required="required">
+					</div>
+					<div class="form-group">
+						<input type="password" ng-model="User.password" class="form-control" placeholder="Choose your password" required="required">
+					</div>
+					<div class="form-group">
+						<input type="submit" ng-click="register()" class="btn btn-primary btn-block btn-lg" value="Sign up">
+					</div>
+					<p class="hint-text small">Already registered? Please&nbsp;<a href="#/login">Sign in here</a></p>
+				</div>
+		</div>
+	</div>
+</form>
+</div>
 </body>
 </html>
