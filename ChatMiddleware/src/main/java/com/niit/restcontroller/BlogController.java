@@ -27,7 +27,7 @@ public class BlogController {
 	@GetMapping("/showAllBlogsOfUser")
 	public ResponseEntity<List<Blog>> showAllBlogsOfUser() {
 		log.info("Inside showAllBlogs of a specific user");
-		//String loginName = session.getAttribute("loginName");
+		//String loginName = (String) session.getAttribute("loginName");
 		String loginName = "Anu";
 		log.debug("Login Name from session is "+loginName);
 		List<Blog> listUsersBlog = blogDAO.blogListUser(loginName);

@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
 import com.niit.dao.UserDetailDAO;
 import com.niit.model.UserDetail;
 
 @RestController
 public class UserDetailController {
+	private static final Gson gson = new Gson();
 	private static final Logger log = LoggerFactory.getLogger(UserDetailController.class);
 	
 	@Autowired
@@ -35,10 +38,10 @@ public class UserDetailController {
 		
 		if(userDetailDAO.addUserDetail(userDetail)) {
 			log.info("Adding new user is successful");
-			return new ResponseEntity<String>("Adding new user is successful!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Adding new user is successful!"),HttpStatus.OK);
 		}else {
 			log.info("Adding new user was not successful");
-			return new ResponseEntity<String>("Error in adding new user!",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(gson.toJson("Error in adding new user!"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -46,10 +49,10 @@ public class UserDetailController {
 	public ResponseEntity<String> editUserProfile(@PathVariable("loginName") String loginName, @RequestBody UserDetail userDetail){
 		if(userDetailDAO.updateUserDetail(userDetail)) {
 			log.info("Updating user details is successful");
-			return new ResponseEntity<String>("Updating user details is successful!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Updating user details is successful!"),HttpStatus.OK);
 		}else {
 			log.info("Updating user details was not successful");
-			return new ResponseEntity<String>("Error in updating user!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in updating user!"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -58,10 +61,10 @@ public class UserDetailController {
 		UserDetail userDetail = userDetailDAO.viewUserDetailByloginName(loginName);
 		if(userDetailDAO.deleteUserDetail(userDetail)) {
 			log.info("Removing user profile is successful");
-			return new ResponseEntity<String>("Removing user profile is successful!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Removing user profile is successful!"),HttpStatus.OK);
 		}else {
 			log.info("Removing user profile was not successful");
-			return new ResponseEntity<String>("Error in deleting user!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in deleting user!"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -90,13 +93,15 @@ public class UserDetailController {
 	}
 	
 	@PostMapping("/authenticateUser")
-	public ResponseEntity<String> authenticateUser(@RequestBody UserDetail userDetail){
+	public ResponseEntity<UserDetail> authenticateUser(@RequestBody UserDetail userDetail){
+		UserDetail loggedInUser = null;
 		if(userDetailDAO.authenticateUser(userDetail)) {
-			log.info("Adding new user is successful");
-			return new ResponseEntity<String>("Authentication success!",HttpStatus.OK);
+			loggedInUser = userDetailDAO.viewUserDetailByloginName(userDetail.getLoginName());
+			log.info("User Authentication successful");
+			return new ResponseEntity<UserDetail>(loggedInUser,HttpStatus.OK);
 		}else {
-			log.info("Adding new user was not successful");
-			return new ResponseEntity<String>("Authentication failure!",HttpStatus.UNAUTHORIZED);
+			log.info("User Authentication failed");
+			return new ResponseEntity<UserDetail>(loggedInUser,HttpStatus.UNAUTHORIZED);
 		}
 	}
 }
