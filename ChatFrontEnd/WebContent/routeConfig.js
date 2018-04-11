@@ -1,4 +1,4 @@
-var myApp = angular.module("myApp",['ngRoute']);
+var myApp = angular.module("myApp",['ngRoute','ngCookies']);
 
 myApp.config(function($routeProvider,$locationProvider) {
 	//alert('Inside routeProvider');
@@ -9,4 +9,16 @@ myApp.config(function($routeProvider,$locationProvider) {
 					.when("/register",{templateUrl:"User/register.html"})
 					.when("/contactUs",{templateUrl:"Home/contactUs.html"})
 					.when("/myBlog",{templateUrl:"Blog/myBlog.html"})
+					.when("/addBlog",{templateUrl:"Blog/blog.html"})
+					.when("/logout",{templateUrl:"Home/logout.html"})
+					.when("/viewBlogs",{templateUrl:"Blog/allBlogs.html"})
+});
+
+myApp.run(function($rootScope,$cookies){
+	console.log('Inside Run function of routeConfig.js')
+	console.log($rootScope.currentUser);
+	if($rootScope.currentUser==undefined) {
+		console.log('rootscope is undefined');
+		$rootScope.currentUser = $cookies.getObject("userDetails");
+	}
 });

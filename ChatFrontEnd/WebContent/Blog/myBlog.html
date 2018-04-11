@@ -2,19 +2,39 @@
 <html>
 <head>
 <title>My Blogs</title>
+<style>
+.text-muted {
+	color:#ffffff!important;
+}
+
+.paddingInclude {
+	padding-top: 10px;
+	margin:5px;
+}
+
+</style>
 </head>
 <body>
 <div class="container" ng-controller="BlogController">
-<table class="table table-responsive">
-	<tr>
-		<td>Blog Name</td>
-		<td>Blog Content</td>
-	</tr>	
-	<tr ng-repeat="blog in blogData">
-		<td>{{blog.blogName}}</td>
-		<td>{{blog.blogContent}}</td>
-	</tr>
-</table>
+<div class="paddingInclude">
+<div class="card">
+  <div class="card-body">
+    <h4 align="center">My Blogs</h4>
+  </div>
+</div>
+<div class="card-deck">
+  <div class="card text-white bg-secondary mb-3" ng-repeat="blog in blogData">
+    <div class="card-body">
+      <h5 class="card-title">{{blog.blogName}}</h5>
+      <p class="card-text text-truncate">{{blog.blogContent}}</p>
+      <a href="#" class="btn btn-primary">Read More</a>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Last updated 3 mins ago</small>
+    </div>
+  </div>
+</div>
+</div>
 </div>
 </body>
 </html>

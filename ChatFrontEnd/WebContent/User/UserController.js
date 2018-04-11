@@ -1,4 +1,4 @@
-myApp.controller("UserController",function($scope, $rootScope, $http, $location){
+myApp.controller("UserController",function($scope, $rootScope, $http, $location,$cookies){
 	$scope.User = {
 			"loginName":'',
 			"password":'',
@@ -11,11 +11,8 @@ myApp.controller("UserController",function($scope, $rootScope, $http, $location)
 	};
 	
 	$scope.register = function(){
-		console.log('Inside register function');
 		$http.post('http://localhost:8083/ChatMiddleware/addUserDetails',$scope.User)
 				.then(function(response){
-					console.log('Registration Complete');
-					console.log(response.statusText);
 					$location.path("/login");
 				});
 	}
@@ -25,7 +22,15 @@ myApp.controller("UserController",function($scope, $rootScope, $http, $location)
 				.then(function(response) {
 					$scope.User = response.data;
 					$rootScope.currentUser = response.data;
+					$cookies.putObject("userDetails",response.data);
 					$location.path("/home");
 		});
+	}
+	
+	$rootScope.logout = function(){
+		console.log('Inside logout');
+		$cookies.remove("userDetails");
+		delete $rootScope.currentUser;
+		$location.path("/logout");
 	}
 });

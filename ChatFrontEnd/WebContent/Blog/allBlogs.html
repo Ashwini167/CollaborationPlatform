@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Blogs</title>
+</head>
+<body>
+<div class="container" ng-controller="BlogController">
+<table class="table table-responsive">
+	<tr>
+		<td>Blog Name</td>
+		<td>Blog Content</td>
+	</tr>	
+	<tr ng-repeat="blog in allBlogList">
+		<td>{{blog.blogName}}</td>
+		<td>{{blog.blogContent}}</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

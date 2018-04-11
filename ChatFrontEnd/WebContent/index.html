@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
@@ -26,23 +27,35 @@
       <li class="nav-item">
         <a class="nav-link" href="#/home">Home</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
         <a class="nav-link" href="#/login">Login</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
         <a class="nav-link" href="#/register">Register</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
         <a class="nav-link" href="#/contactUs">Contact Us</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#/myBlog">My Blogs</a>
+      <li ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+        <a class="nav-link" href="#/viewBlogs">Read our Blog</a>
+      </li>
+      <li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Blogs
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+		  <a class="dropdown-item" href="#/viewBlogs">Read Blogs</a>
+          <a class="dropdown-item" href="#/addBlog">Add Blog</a>
+          <a class="dropdown-item" href="#/myBlog">My Blogs</a>
+        </div>
       </li>
     </ul>
-    <form class="form-inline">
-    <input class="form-control mr-sm-2 borderStyle" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
+    <form ng-controller="UserController">
+	<span class="navbar-text" ng-hide="currentUser==undefined">
+		<font class="my-2 my-sm-0" color="darkgreen">Welcome, {{currentUser.username}}!</font>&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="submit" value="Logout" class="btn btn-sm btn-outline-success my-2 my-sm-0" ng-click="logout()">	
+	</span>	   
+	</form> 
   </div>
 </nav>
 <div ng-view></div>
