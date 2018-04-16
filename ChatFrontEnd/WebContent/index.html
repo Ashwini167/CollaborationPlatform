@@ -1,6 +1,5 @@
 <html>
 <head>
-<title>Index Page</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
@@ -11,6 +10,9 @@
 <script src="routeConfig.js"></script>
 <script src="User/UserController.js"></script>
 <script src="Blog/BlogController.js"></script>
+<script src="Blog/BlogCommentController.js"></script>
+<script src="Job/JobController.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Amaranth" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body ng-app="myApp">
@@ -39,15 +41,28 @@
       <li ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
         <a class="nav-link" href="#/viewBlogs">Read our Blog</a>
       </li>
+      <li ng-show="currentUser.role=='ROLE_USER'">
+        <a class="nav-link" href="#/updateProfile">Update Profile</a>
+      </li>
       <li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#/viewBlogs" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Blogs
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		  <a class="dropdown-item" href="#/viewBlogs">Read Blogs</a>
+		  <a class="dropdown-item" href="#/manageBlogs" ng-show="currentUser.role=='ROLE_ADMIN'">Manage Blogs</a>
+		  <a class="dropdown-item" href="#/viewBlogs" ng-show="currentUser.role=='ROLE_USER'">Read Blogs</a>
           <a class="dropdown-item" href="#/addBlog">Add Blog</a>
           <a class="dropdown-item" href="#/myBlog">My Blogs</a>
         </div>
+      </li>
+      <li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_ADMIN'">
+      	<a class="nav-link dropdown-toggle" href="#/viewJobs" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Job
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      		<a class="nav-link" href="#/addJob">Add Job</a>
+      		<a class="nav-link" href="#/viewJobs">View Jobs</a>
+      	</div>
       </li>
     </ul>
     <form ng-controller="UserController">

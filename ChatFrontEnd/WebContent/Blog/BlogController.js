@@ -1,6 +1,6 @@
 myApp.controller("BlogController",function($scope, $rootScope, $http, $location){
 	console.log('Inside blogController');
-	
+	$scope.displaySelector = "";
 	$scope.blog = {
 			"blogId":0,
 			"blogName":'',
@@ -17,9 +17,9 @@ myApp.controller("BlogController",function($scope, $rootScope, $http, $location)
 				"address":'',
 				"role":'',
 				"enabled":''				
-			},
+			}
 	};
-	
+
 	$scope.listBlog = function($rootScope){
 		console.log('Inside retrieve user blog function');
 		$http.get('http://localhost:8083/ChatMiddleware/showAllBlogsOfUser')
@@ -38,17 +38,7 @@ myApp.controller("BlogController",function($scope, $rootScope, $http, $location)
 				console.log(response.data);
 				$location.path("/myBlog");
 			});
-	}
-	
-	$scope.blogList = function(){
-		console.log('Inside retrieve all approved blogs function');
-		$http.get('http://localhost:8083/ChatMiddleware/showApprovedBlogs')
-			.then(function(response) {
-				console.log('Inside response');
-				console.log(response.data);
-				$scope.blogList = response.data;
-			});
-	}
+	}	
 	
 	$scope.allBlogs = function(){
 		console.log('Inside show all blogs function');
@@ -56,7 +46,65 @@ myApp.controller("BlogController",function($scope, $rootScope, $http, $location)
 			.then(function(response){
 				$scope.allBlogList = response.data;
 			})
-	}	
+	}
+	
+	$scope.blogListForAdmin = function(){
+		console.log('Inside show all blogs function');
+		$http.get('http://localhost:8083/ChatMiddleware/showAllBlogs')
+			.then(function(response){
+				$scope.completeBlogList = response.data;
+			})
+	}
+	
 	$scope.listBlog();
 	$scope.allBlogs();
-});
+	$scope.blogListForAdmin();
+	
+	$scope.readMore = function(blogId){
+		console.log('Inside read more function');
+		$http.get('http://localhost:8083/ChatMiddleware/getBlog/'+blogId)
+			.then(function(response) {
+				console.log('Inside readBlog');
+				$scope.getComments(blogId);
+				$rootScope.readBlog = response.data;
+				$rootScope.likes = $rootScope.readBlog.likes;
+				console.log('Likes are: '+$rootScope.likes);
+				$location.path("/readBlog");
+			});
+	}
+	
+	$scope.incrementLikes = function(blogId) {
+		console.log('Inside like method');
+		$http.get('http://localhost:8083/ChatMiddleware/incrementLikes/'+blogId)
+			.then(function(response){
+				console.log('after response');
+				$rootScope.likes++;
+				console.log('After increment, likes are: '+$rootScope.likes);
+			});
+	}
+	
+	$scope.getComments = function(blogId){
+		console.log('Inside get blog of blogId: '+blogId);
+		$http.get('http://localhost:8083/ChatMiddleware/getBlogComments/'+blogId)
+				.then(function(response){
+					console.log('After rest controller response');
+					$rootScope.commentList = response.data;
+				});
+	}
+	
+	$scope.approveBlog = function(blogId){
+		console.log('Inside approve blog function: '+blogId);
+		$http.get('http://localhost:8083/ChatMiddleware/approveBlog/'+blogId)
+		.then(function(response){
+			console.log('Blog Approved');
+		});
+	}
+	
+	$scope.rejectBlog = function(blogId){
+		console.log('Inside reject blog function: '+blogId);
+		$http.get('http://localhost:8083/ChatMiddleware/rejectBlog/'+blogId)
+		.then(function(response){
+			console.log('Blog Rejected');
+		});
+	}	
+});		

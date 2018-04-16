@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blogs</title>
+<style>
+.paddingInclude {
+	padding-top: 25px;
+}
+.card-header {
+	
+}
+</style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container paddingInclude" ng-controller="BlogController">
+<div class="card">
+  <div class="card-header">
+	<h4><b>{{readBlog.blogName}}</b></h4>
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{readBlog.blogContent}}</p>
+  </div>
+  <div class="card-footer text-muted">
+  	<p class="card-text">
+  		<small class="text-muted">Posted by {{readBlog.userDetail.loginName}} on {{readBlog.createdDate}}</small>
+  	</p>   
+  	<p class="card-text">
+  		<a href="" ng-click="incrementLikes(readBlog.blogId)">
+  			<i class="fa fa-thumbs-o-up" style="font-size:22px;"></i>&nbsp;Like
+  		</a>&nbsp;&nbsp;&nbsp;&nbsp;  	
+  		<small class="text-muted">{{likes}} people like this blog.</small>
+  	</p>   	
+  </div>
+  <ul class="list-group list-group-flush" ng-controller="BlogCommentController">
+  	<li class="list-group-item">
+  		<textarea ng-model="blogComment.commentText" rows="2" cols="10" class="form-control" placeholder="Write your comment here.." required="required"></textarea>
+  		<input type="submit" ng-click="addComment()" class="btn btn-primary btn-sm" value="Comment">
+  	</li>
+  </ul>
+  <ul class="list-group list-group-flush" ng-repeat="comment in commentList | orderBy:'-commentDate'">
+    	<li class="list-group-item" ng-class-odd="'odd'" ng-class-even="'even'">
+    		<small><b>{{comment.userDetail.loginName}} says: </b></small>
+    		<small>{{comment.commentText}}</small>
+    		<small style="display:block;"><b>Posted on: </b>{{comment.commentDate}}</small>
+    	</li>
+  </ul>
+</div>
+</div>	
+</body>
+</html>

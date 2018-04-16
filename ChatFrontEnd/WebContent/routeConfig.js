@@ -12,6 +12,12 @@ myApp.config(function($routeProvider,$locationProvider) {
 					.when("/addBlog",{templateUrl:"Blog/blog.html"})
 					.when("/logout",{templateUrl:"Home/logout.html"})
 					.when("/viewBlogs",{templateUrl:"Blog/allBlogs.html"})
+					.when("/adminBlog",{templateUrl:"Blog/adminBlog.html"})
+					.when("/readBlog",{templateUrl:"Blog/readBlog.html"})
+					.when("/manageBlogs",{templateUrl:"Blog/adminBlog.html"})
+					.when("/addJob",{templateUrl:"Job/addJob.html"})
+					.when("/viewJobs",{templateUrl:"Job/viewJobs.html"})
+					.when("/updateProfile",{templateUrl:"Job/viewJobs.html"})
 });
 
 myApp.run(function($rootScope,$cookies){

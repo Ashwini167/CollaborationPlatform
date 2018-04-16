@@ -1,24 +1,32 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>My Blogs</title>
+<title>Blogs</title>
 <style>
 .text-muted {
 	color:#ffffff!important;
 }
 .paddingInclude {
 	padding-top: 10px;
-	margin: 5px;
+	margin:5px;
 }
 </style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+
 <div class="container" ng-controller="BlogController">
 <div class="paddingInclude">
-<h4 align="center">My Blogs</h4>
-<div class="row">
-<label class="form-check-label">View Blogs: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+<div class="card">
+  <div class="card-body">
+    <h4 align="center">Blogs</h4>
+  </div>
 </div>
-<div class="form-check form-check-inline">
+
+<div class="row paddingInclude">
+<label class="form-check-label paddingInclude">View Blogs: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+</div>
+<div class="form-check form-check-inline paddingInclude">
   <input class="form-check-input" type="radio" name="displaySelector" id="inlineCheckbox1" ng-model="displaySelector" value="" checked>
   <label class="form-check-label" for="inlineCheckbox1">All</label>  
 </div>
@@ -35,21 +43,25 @@
   <label class="form-check-label" for="inlineCheckbox4">Blogs awaiting approval</label>
 </div>
 
-<div class="card-deck paddingInclude">
-  <div class="card text-white bg-secondary mb-3" ng-repeat="blog in blogData | filter:displaySelector">    
+
+<div class="row paddingInclude">
+    <div class="col-sm-6 col-md-4 col-lg-4 " ng-repeat="blog in completeBlogList | filter:displaySelector:strict">
+  	<div class="card text-white bg-secondary mb-3">
     <div class="card-body">
-      <h5 class="card-title">{{blog.blogName}}</h5>
+      <h4 class="card-title">{{blog.blogName}}</h4>
       <p class="card-text text-truncate">{{blog.blogContent}}</p>
-      <a href="#" class="btn btn-primary" ng-click="readMore(blog.blogId)">Read More</a>&nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-danger">Delete</a>
+      <button class="btn btn-primary btn-sm" ng-click="readMore(blog.blogId)">Read More</button>
+      <button class="btn btn-success btn-sm" ng-show="currentUser.role=='ROLE_ADMIN' && blog.status=='Created'" ng-click="approveBlog(blog.blogId)">Approve</button>
+      <button class="btn btn-danger btn-sm" ng-show="currentUser.role=='ROLE_ADMIN' && (blog.status=='Created' || blog.status=='Approved')" ng-click="rejectBlog(blog.blogId)">Reject</button>
     </div>
     <div class="card-footer">
-      <small class="text-muted">Blog by: {{blog.userDetail.loginName}}</small>	
+      <small class="text-muted">Blog by: {{blog.userDetail.loginName}}</small>
       <small class="text-muted" style="display:block;">Posted on {{blog.createdDate}}</small>
-      <small class="text-muted" style="display:block;">Status: {{blog.status}}</small>
     </div>
   </div>
-</div>
-</div>
-</div>
+  </div>
+  </div>
+  </div>
+  </div>
 </body>
 </html>

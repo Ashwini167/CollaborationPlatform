@@ -1,0 +1,28 @@
+<head>
+<title>Jobs</title>
+</head>
+<body>
+<div class="container">
+<div id="accordion">
+	<div class="card" ng-repeat="job in listOfJobs">
+    <div class="card-header">
+      <a class="card-link" data-toggle="collapse" href="#{{job.jobId}}">
+        {{job.jobDesignation}}
+      </a>
+    </div>
+    <div id="{{job.jobId}}" class="collapse show" data-parent="#accordion">
+      <div class="card-body">
+        <p class="card-text">Company: {{job.company}}</p>
+        <p class="card-text">Location: {{job.location}}</p>
+        <p class="card-text">Salary: {{job.salary}}</p>
+        <p class="card-text">
+        	<button class="btn btn-primary btn-sm" ng-show="currentUser.role=='ROLE_USER'" ng-click="apply(job.jobId)">Apply</button>
+        	<button class="btn btn-success btn-sm" ng-show="currentUser.role=='ROLE_ADMIN'" ng-click="update(job.jobId)">Update</button>
+        	<button class="btn btn-danger btn-sm" ng-show="currentUser.role=='ROLE_ADMIN'" ng-click="delete(job.jobId)">Delete</button> 
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
