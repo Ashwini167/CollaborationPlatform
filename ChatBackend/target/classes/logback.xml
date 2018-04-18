@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
 	<property name="DEV_HOME" value="G:/logs" />
-
 	<appender name="debugLog" class="ch.qos.logback.core.FileAppender">
 		<file>${DEV_HOME}/debug.log</file>
 		 <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -31,5 +28,4 @@
 		<appender-ref ref="debugLog" />
 		<appender-ref ref="infoLog" />
 	</root>
-
 </configuration>

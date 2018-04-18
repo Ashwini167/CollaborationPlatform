@@ -51,6 +51,7 @@ public class DBConfig {
 			factoryBuilder.addAnnotatedClass(Job.class);
 			factoryBuilder.addAnnotatedClass(ApplyJob.class);
 			factoryBuilder.addAnnotatedClass(Friend.class);
+			factoryBuilder.addAnnotatedClass(ProfilePicture.class);
 			
 			factoryBuilder.addProperties(hibernateProp);			
 			log.info("SessionFactory bean created and returned");
@@ -97,5 +98,12 @@ public class DBConfig {
 		public FriendDAO getFriendDAO()	{
 			log.info("FriendDAO bean created and returned");
 			return new FriendDAOImpl();
+		}
+		
+		/* Method to create the bean of ProfilePictureDAO */
+		@Bean(name="profilePictureDAO")
+		public ProfilePictureDAO getProfilePictureDAO()	{
+			log.info("ProfilePictureDAO bean created and returned");
+			return new ProfilePictureDAOImpl();
 		}
 }

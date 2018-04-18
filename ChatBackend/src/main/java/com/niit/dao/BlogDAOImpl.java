@@ -176,7 +176,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public List<Blog> getToBeApprovedBlogs() {
 		try {
 			log.info("Inside retrieve to be approved blogs -- try block");
-			String hql="from Blog where status="+"'create'";
+			String hql="from Blog where status="+"'Created'";
 			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		} catch(Exception e) {
 			log.error("Exception while retrieving to be approved blog list", e);

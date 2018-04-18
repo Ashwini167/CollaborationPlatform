@@ -1,12 +1,15 @@
 package com.niit.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.niit.model.Friend;
+import com.niit.model.UserDetail;
 
 @Repository("friendDAO")
 public class FriendDAOImpl implements FriendDAO {
@@ -85,6 +88,26 @@ public class FriendDAOImpl implements FriendDAO {
 		try {
 			return (Friend)sessionFactory.getCurrentSession().get(Friend.class, friendId);
 		}catch(Exception e) {
+			System.out.println("There is an exception here! \n"+e);
+			return null;
+		}
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<UserDetail> viewSuggestedFriends(String loginName) {
+		try {
+			String hql="select loginName from userDetail where loginName not in (select loginName from toFriend where friendId in (select friendId from requestor where loginName='"+loginName+"')) AND loginName!='"+loginName+"'";
+			List<Object> objList = (List<Object>)sessionFactory.getCurrentSession().createSQLQuery(hql).list();	
+			Iterator<Object> itr = objList.iterator();
+			List<UserDetail> suggestedFriends = new ArrayList<UserDetail>();
+			while(itr.hasNext()) {
+				suggestedFriends.add((UserDetail)sessionFactory.getCurrentSession().get(UserDetail.class, itr.next().toString()));
+			}
+			return suggestedFriends;
+		} catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
 		}

@@ -97,6 +97,7 @@ public class JobUnitTest {
 		assertTrue("Problem in applying for job!",(jobDAO.applyJob(appln)>0));
 	}
 	
+	@Ignore
 	@Test
 	public void viewAppliedJobsTest(){
 		List<ApplyJob> applnList = jobDAO.viewAppliedJobs("Subha");
@@ -110,7 +111,7 @@ public class JobUnitTest {
 		}		
 	}
 	
-
+	@Ignore
 	@Test
 	public void viewAllJobApplicationsTest(){
 		List<ApplyJob> applnList = jobDAO.viewAllJobApplications();

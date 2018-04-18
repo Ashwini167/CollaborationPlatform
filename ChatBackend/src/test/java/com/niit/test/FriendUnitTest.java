@@ -25,7 +25,8 @@ public class FriendUnitTest {
 		context.refresh();
 		friendDAO = (FriendDAO) context.getBean("friendDAO");
 	}
-
+	
+	@Ignore
 	@Test
 	public void addFriendTest() {
 		Friend friend = new Friend();
@@ -90,4 +91,14 @@ public class FriendUnitTest {
 		}
 		assertNotNull("Problem in retrieving friend requests",friendRequests);
 	}
+	
+	@Test
+	public void viewSuggestedFriendsTest() {
+		List<UserDetail> suggestedFriends = friendDAO.viewSuggestedFriends("Anu");
+		System.out.println("Suggested friends: ");
+		for(UserDetail user:suggestedFriends) {
+			System.out.println(user.getLoginName());
+		}
+	}
+	
 }

@@ -191,17 +191,17 @@ public class BlogUnitTest {
 		}	
 	}
 	
-	@Ignore
+	
 	@Test
 	public void addBlogCommentUnitTest() {
 		Blog blog = new Blog();
 		blog.setBlogId(50400);
 		
 		UserDetail userDetail = new UserDetail();
-		userDetail.setLoginName("Admin");
+		userDetail.setLoginName("Vijay");
 		
 		BlogComment comment = new BlogComment();
-		comment.setCommentText("Meaningful post. Thanks for your contribution");
+		comment.setCommentText("Well said!");
 		comment.setCommentDate(new Date());
 		comment.setBlog(blog);
 		comment.setUserDetail(userDetail);
