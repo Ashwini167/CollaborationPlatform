@@ -27,7 +27,6 @@ myApp.controller("JobController",function($scope, $rootScope, $http, $location,$
 					console.log('Inside jobList response');
 					console.log(response.data);
 					$scope.listOfJobs = response.data;
-					$location.path('/viewJobs');
 				});
 	}
 	

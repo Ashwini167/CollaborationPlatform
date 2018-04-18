@@ -17,7 +17,7 @@ myApp.config(function($routeProvider,$locationProvider) {
 					.when("/manageBlogs",{templateUrl:"Blog/adminBlog.html"})
 					.when("/addJob",{templateUrl:"Job/addJob.html"})
 					.when("/viewJobs",{templateUrl:"Job/viewJobs.html"})
-					.when("/updateProfile",{templateUrl:"Job/viewJobs.html"})
+					.when("/updateProfile",{templateUrl:"User/ProfilePicture.html"})
 });
 
 myApp.run(function($rootScope,$cookies){

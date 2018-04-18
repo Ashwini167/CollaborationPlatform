@@ -67,6 +67,7 @@
     </ul>
     <form ng-controller="UserController">
 	<span class="navbar-text" ng-hide="currentUser==undefined">
+		<img style="border-radius:30px;" src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}" alt="Your profile picture" width="50" height="50"/>
 		<font class="my-2 my-sm-0" color="darkgreen">Welcome, {{currentUser.username}}!</font>&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="submit" value="Logout" class="btn btn-sm btn-outline-success my-2 my-sm-0" ng-click="logout()">	
 	</span>	   

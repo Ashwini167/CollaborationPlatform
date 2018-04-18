@@ -33,4 +33,8 @@ myApp.controller("UserController",function($scope, $rootScope, $http, $location,
 		delete $rootScope.currentUser;
 		$location.path("/logout");
 	}
+	
+	$scope.uploadPic = function(){
+		
+	}
 });

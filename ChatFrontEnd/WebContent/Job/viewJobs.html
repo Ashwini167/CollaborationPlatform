@@ -1,21 +1,31 @@
 <head>
 <title>Jobs</title>
+<style>
+.card-text {
+	margin-bottom:2px;
+}
+.headingClass {
+	text-decoration: underline;
+}
+</style>
 </head>
 <body>
-<div class="container">
-<div id="accordion">
+<div class="container" ng-controller="JobController">
+<div id="accordion" close-others=false>
 	<div class="card" ng-repeat="job in listOfJobs">
-    <div class="card-header">
-      <a class="card-link" data-toggle="collapse" href="#{{job.jobId}}">
-        {{job.jobDesignation}}
-      </a>
+    <div class="card-header" id="heading{{job.jobId}}">
+      <button class="btn btn-link" data-toggle="collapse" data-target="#{{job.jobId}}" aria-expanded="true" aria-controls="{{job.jobId}}">
+          {{job.jobDesignation}}
+      </button>
     </div>
-    <div id="{{job.jobId}}" class="collapse show" data-parent="#accordion">
+    <div id="{{job.jobId}}" class="collapse show" aria-labelledby="heading{{job.jobId}}" data-parent="#accordion">
       <div class="card-body">
-        <p class="card-text">Company: {{job.company}}</p>
-        <p class="card-text">Location: {{job.location}}</p>
-        <p class="card-text">Salary: {{job.salary}}</p>
-        <p class="card-text">
+        <p class="card-text"><span class="headingClass">Company:</span> {{job.company}}</p>
+        <p class="card-text"><span class="headingClass">Location:</span> {{job.location}}</p>
+        <p class="card-text"><span class="headingClass">Salary:</span> {{job.salary}}</p>
+        <p class="card-text"><span class="headingClass">Skill set:</span> {{job.skillSet}}</p>
+        <p class="card-text"><span class="headingClass">JD:</span> {{job.jobDesc}}</p>
+        <p class="card-text" style="margin-top:10px">
         	<button class="btn btn-primary btn-sm" ng-show="currentUser.role=='ROLE_USER'" ng-click="apply(job.jobId)">Apply</button>
         	<button class="btn btn-success btn-sm" ng-show="currentUser.role=='ROLE_ADMIN'" ng-click="update(job.jobId)">Update</button>
         	<button class="btn btn-danger btn-sm" ng-show="currentUser.role=='ROLE_ADMIN'" ng-click="delete(job.jobId)">Delete</button> 
