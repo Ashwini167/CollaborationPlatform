@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.google.gson.Gson;
 import com.niit.dao.JobDAO;
 import com.niit.model.Job;
 
 @RestController
 public class JobController {
+	private static final Gson gson = new Gson();
 	private static final Logger log = LoggerFactory.getLogger(JobController.class);
 	
 	@Autowired
@@ -38,10 +40,10 @@ public class JobController {
 		
 		if(jobDAO.addJob(job)>0) {
 			log.info("Adding new job is successful");
-			return new ResponseEntity<String>("Job posted",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Job posted"),HttpStatus.OK);
 		} else {
 			log.info("Adding new job was not successful");
-			return new ResponseEntity<String>("Error in posting the job",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(gson.toJson("Error in posting the job"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}	
 	
@@ -51,10 +53,10 @@ public class JobController {
 		
 		if(jobDAO.deleteJob(job)) {
 			log.info("Deleting job is successful");
-			return new ResponseEntity<String>("Job deleted",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Job deleted"),HttpStatus.OK);
 		} else {
 			log.info("Deleting job was not successful");
-			return new ResponseEntity<String>("Error in deleting the job",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in deleting the job"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -63,10 +65,10 @@ public class JobController {
 		
 		if(jobDAO.updateJob(job)) {
 			log.info("Updating job is successful");
-			return new ResponseEntity<String>("Job posted",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Job posted"),HttpStatus.OK);
 		} else {
 			log.info("Updating job was not successful");
-			return new ResponseEntity<String>("Error in posting the job",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in posting the job"),HttpStatus.NOT_FOUND);
 		}
 	}
 	

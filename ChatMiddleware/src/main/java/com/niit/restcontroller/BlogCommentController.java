@@ -2,7 +2,7 @@ package com.niit.restcontroller;
 
 import java.util.Date;
 import java.util.List;
-
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +15,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
 import com.niit.dao.BlogDAO;
-import com.niit.model.Blog;
 import com.niit.model.BlogComment;
 import com.niit.model.UserDetail;
 
 @RestController
 public class BlogCommentController {
+	private static final Gson gson = new Gson();
 	private static final Logger log = LoggerFactory.getLogger(BlogController.class);
 	@Autowired
 	BlogDAO blogDAO;
 	
 	@PostMapping("/addBlogComment")
-	public ResponseEntity<String> addBlogComment(@RequestBody BlogComment blogComment) {
-		blogComment.setCommentDate(new Date());
-			
-		Blog blog = new Blog();
-		blog.setBlogId(50150);
-		blogComment.setBlog(blog);
-		
-		//String loginName = session.getAttribute("loginName");
-		String loginName = "Loga";
+	public ResponseEntity<String> addBlogComment(@RequestBody BlogComment blogComment, HttpSession session) {
+		blogComment.setCommentDate(new Date());		
+		String loginName = ((UserDetail)session.getAttribute("loggedInUser")).getLoginName();
 		log.debug("Login Name from session is "+loginName);
 		
 		UserDetail userDetail = new UserDetail();
@@ -46,11 +42,11 @@ public class BlogCommentController {
 		
 		if (blogDAO.addBlogComment(blogComment)) {
 			log.info("Adding blog comment by "+loginName+" was successful");
-			return new ResponseEntity<String>("Blog comment Added successfully!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog comment Added successfully!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Adding blog comment by "+loginName+" was not successful");
-			return new ResponseEntity<String>("Error in adding the blog comment!",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(gson.toJson("Error in adding the blog comment!"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -62,11 +58,11 @@ public class BlogCommentController {
 		
 		if (blogDAO.editBlogComment(blogComment)) {
 			log.info("Updating blog comment with Id "+blogCommentId+" was successful");
-			return new ResponseEntity<String>("Blog comment updated successfully!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog comment updated successfully!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Updating blog comment with Id "+blogCommentId+" was not successful");
-			return new ResponseEntity<String>("Error in updating the blog comment!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in updating the blog comment!"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -77,11 +73,11 @@ public class BlogCommentController {
 		
 		if (blogDAO.deleteBlogComment(blogComment)) {
 			log.info("Deleting blog comment with Id "+blogCommentId+" was successful");
-			return new ResponseEntity<String>("Blog Added successfully!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Comment deleted"),HttpStatus.OK);
 		}
 		else {
 			log.info("Deleting blog comment with Id "+blogCommentId+" was not successful");
-			return new ResponseEntity<String>("Error in adding the blog!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error while deleting the comment!"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -100,10 +96,8 @@ public class BlogCommentController {
 		}
 	}
 	
-	@GetMapping("/getBlogComments")
-	public ResponseEntity<List<BlogComment>> getBlogComments() {
-		//int blogId = session.getAttribute("blogId");
-		int blogId = 50150;
+	@GetMapping("/getBlogComments/{blogId}")
+	public ResponseEntity<List<BlogComment>> getBlogComments(@PathVariable("blogId")int blogId) {
 		List<BlogComment> blogCommentList = blogDAO.getBlogComments(blogId);
 		log.debug("Trying to retrieve comments for the blog "+blogId);
 		

@@ -1,6 +1,9 @@
 package com.niit.restcontroller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +96,11 @@ public class UserDetailController {
 	}
 	
 	@PostMapping("/authenticateUser")
-	public ResponseEntity<UserDetail> authenticateUser(@RequestBody UserDetail userDetail){
+	public ResponseEntity<UserDetail> authenticateUser(@RequestBody UserDetail userDetail,HttpSession session){
 		UserDetail loggedInUser = null;
 		if(userDetailDAO.authenticateUser(userDetail)) {
 			loggedInUser = userDetailDAO.viewUserDetailByloginName(userDetail.getLoginName());
+			session.setAttribute("loggedInUser", loggedInUser);
 			log.info("User Authentication successful");
 			return new ResponseEntity<UserDetail>(loggedInUser,HttpStatus.OK);
 		}else {

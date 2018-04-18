@@ -2,6 +2,7 @@ package com.niit.restcontroller;
 
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +14,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.google.gson.Gson;
 import com.niit.dao.BlogDAO;
 import com.niit.model.Blog;
 import com.niit.model.UserDetail;
 
 @RestController
 public class BlogController {	
-	
+	private static final Gson gson = new Gson();
 	private static final Logger log = LoggerFactory.getLogger(BlogController.class);
 	@Autowired
 	BlogDAO blogDAO;
 	
 	@GetMapping("/showAllBlogsOfUser")
-	public ResponseEntity<List<Blog>> showAllBlogsOfUser() {
+	public ResponseEntity<List<Blog>> showAllBlogsOfUser(HttpSession session) {
 		log.info("Inside showAllBlogs of a specific user");
-		//String loginName = (String) session.getAttribute("loginName");
-		String loginName = "Anu";
-		log.debug("Login Name from session is "+loginName);
+		String loginName = ((UserDetail)session.getAttribute("loggedInUser")).getLoginName();
+		//String loginName = "Vijay";
+		log.debug("Login Name (show blogs of user method) from session is "+loginName);
 		List<Blog> listUsersBlog = blogDAO.blogListUser(loginName);
 		if(listUsersBlog!=null) {
 			log.debug("User "+loginName+" has atleast one blog written");
@@ -42,14 +44,13 @@ public class BlogController {
 	}
 	
 	@PostMapping("/addBlog")
-	public ResponseEntity<String> addBlog(@RequestBody Blog blog){		
-		
-		//String loginName = session.getAttribute("loginName");
-		String loginName = "Anu";
-		log.debug("Login Name from session is "+loginName);
+	public ResponseEntity<String> addBlog(@RequestBody Blog blog, HttpSession session){		
+		//String loginName = "Vijay";
+		String loginName = ((UserDetail)session.getAttribute("loggedInUser")).getLoginName();
+		log.debug("Login Name from session (addBlog method) is "+loginName);
 		blog.setCreatedDate(new Date());
 		blog.setLikes(0);
-		blog.setStatus("create");
+		blog.setStatus("Created");
 		
 		UserDetail user = new UserDetail();
 		user.setLoginName(loginName);
@@ -60,40 +61,40 @@ public class BlogController {
 		
 		if (blogDAO.addBlog(blog)) {
 			log.info("Adding blog by "+loginName+" was successful");
-			return new ResponseEntity<String>("Blog Added successfully!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog Added successfully!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Adding blog by "+loginName+" was not successful");
-			return new ResponseEntity<String>("Error in adding the blog!",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(gson.toJson("Error in adding the blog!"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PutMapping("/approveBlog/{blogId}")
+	@GetMapping("/approveBlog/{blogId}")
 	public ResponseEntity<String> approveBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		log.info("Inside approve blog method for blog Id "+blogId);
 		
 		if (blogDAO.approveBlog(blog)) {
 			log.info("Approving "+blogId+" was successful");
-			return new ResponseEntity<String>("Blog Approved!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog Approved!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Approving "+blogId+" was not successful");
-			return new ResponseEntity<String>("Error in approving the blog!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in approving the blog!"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@PutMapping("/rejectBlog/{blogId}")
+	@GetMapping("/rejectBlog/{blogId}")
 	public ResponseEntity<String> rejectBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		log.info("Inside approve blog method for blog Id "+blogId);		
 		if (blogDAO.rejectBlog(blog)) {
 			log.info("Rejecting "+blogId+" was successful");
-			return new ResponseEntity<String>("Blog Rejected!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog Rejected!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Rejecting "+blogId+" was not successful");
-			return new ResponseEntity<String>("Error in rejecting the blog!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in rejecting the blog!"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -104,26 +105,26 @@ public class BlogController {
 		
 		if (blogDAO.deleteBlog(blog)) {
 			log.info("Deleting "+blogId+" was successful");
-			return new ResponseEntity<String>("Blog deleted!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog deleted!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Deleting "+blogId+" was not successful");
-			return new ResponseEntity<String>("Error in deleting the blog!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in deleting the blog!"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@PutMapping("/incrementLikes/{blogId}")
+	@GetMapping("/incrementLikes/{blogId}")
 	public ResponseEntity<String> incrementLikes(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		log.info("Inside increment likes for blog "+blogId);
 		
 		if (blogDAO.incrementLikes(blog)) {
 			log.info("Incrementing likes for "+blogId+" was successful");
-			return new ResponseEntity<String>("Blog liked!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog liked!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Incrementing likes for "+blogId+" was not successful");
-			return new ResponseEntity<String>("Error in liking the blog!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in liking the blog!"),HttpStatus.NOT_FOUND);
 		}
 	} 
 	
@@ -135,11 +136,11 @@ public class BlogController {
 		
 		if (blogDAO.updateBlog(blog)) {
 			log.info("Updating "+blogId+" was successful");
-			return new ResponseEntity<String>("Blog updated!",HttpStatus.OK);
+			return new ResponseEntity<String>(gson.toJson("Blog updated!"),HttpStatus.OK);
 		}
 		else {
 			log.info("Updating "+blogId+" was successful");
-			return new ResponseEntity<String>("Error in updating the blog!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(gson.toJson("Error in updating the blog!"),HttpStatus.NOT_FOUND);
 		}
 	} 
 	

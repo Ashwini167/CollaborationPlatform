@@ -2,6 +2,9 @@ package com.niit.restcontroller;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +29,16 @@ public class ApplyJobController {
 	JobDAO jobDAO;
 	
 	@PostMapping("/applyJob")
-	public ResponseEntity<String> applyJob(@RequestBody ApplyJob applyJob) {
-		//String loginName = (String)session.getAttribute("loginName");
-		String  loginName = "Loga";
+	public ResponseEntity<String> applyJob(@RequestBody ApplyJob applyJob, HttpSession session) {
+		String loginName = ((UserDetail)session.getAttribute("loggedInUser")).getLoginName();
+		
 		int jobId = 50105;		
 		applyJob.setAppliedDate(new Date());
 		applyJob.setStatus("Active");
 		Job job = new Job();
 		job.setJobId(jobId);
-		applyJob.setJob(job);		
+		applyJob.setJob(job);
+		
 		UserDetail userDetail = new UserDetail();
 		userDetail.setLoginName(loginName);
 		applyJob.setUserDetail(userDetail);
