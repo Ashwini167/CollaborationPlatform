@@ -1,13 +1,9 @@
-<!DOCTYPE html>
 <html>
 <head>
 <title>Blogs</title>
 <style>
 .paddingInclude {
 	padding-top: 25px;
-}
-.card-header {
-	
 }
 </style>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -26,23 +22,33 @@
   		<small class="text-muted">Posted by {{readBlog.userDetail.loginName}} on {{readBlog.createdDate}}</small>
   	</p>   
   	<p class="card-text">
-  		<a href="" ng-click="incrementLikes(readBlog.blogId)">
+  		<a ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'" href="" ng-click="incrementLikes(readBlog.blogId)">
   			<i class="fa fa-thumbs-o-up" style="font-size:22px;"></i>&nbsp;Like
   		</a>&nbsp;&nbsp;&nbsp;&nbsp;  	
-  		<small class="text-muted">{{likes}} people like this blog.</small>
+  		<small class="text-muted"><b>{{likes}} people </b>like this blog.</small>
   	</p>   	
   </div>
-  <ul class="list-group list-group-flush" ng-controller="BlogCommentController">
+  <ul ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'" class="list-group list-group-flush" ng-controller="BlogCommentController">
   	<li class="list-group-item">
   		<textarea ng-model="blogComment.commentText" rows="2" cols="10" class="form-control" placeholder="Write your comment here.." required="required"></textarea>
   		<input type="submit" ng-click="addComment()" class="btn btn-primary btn-sm" value="Comment">
   	</li>
   </ul>
-  <ul class="list-group list-group-flush" ng-repeat="comment in commentList | orderBy:'-commentDate'">
+  <ul ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'" class="list-group list-group-flush" ng-controller="BlogCommentController">
+  	<li class="list-group-item">
+  		<small>To Like or Comment on this blog, please <a href="#/login">Sign In</a> or <a href="#/register">Sign Up</a></small>
+  	</li>
+  </ul>
+  <ul class="list-group list-group-flush" ng-repeat="comment in commentList | orderBy:sortComment:true">
     	<li class="list-group-item" ng-class-odd="'odd'" ng-class-even="'even'">
     		<small><b>{{comment.userDetail.loginName}} says: </b></small>
-    		<small>{{comment.commentText}}</small>
+    		<small ng-show="editMode">
+    			<textarea ng-model="blogComment.commentText" rows="2" cols="10" class="form-control" placeholder="Write your comment here.." required="required"></textarea>
+  				<input type="submit" ng-click="updateBlogComment()" class="btn btn-primary btn-sm" value="Update Comment">
+  			</small>
+    		<small ng-hide="editMode">{{comment.commentText}}</small>
     		<small style="display:block;"><b>Posted on: </b>{{comment.commentDate}}</small>
+    		<small ng-show="currentUser.loginName==comment.userDetail.loginName"><a href="" ng-click="editBlogComment(comment.commentId)">Edit</a></small>
     	</li>
   </ul>
 </div>

@@ -7,11 +7,17 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="routeConfig.js"></script>
 <script src="User/UserController.js"></script>
 <script src="Blog/BlogController.js"></script>
 <script src="Blog/BlogCommentController.js"></script>
 <script src="Job/JobController.js"></script>
+<script src="Friend/FriendController.js"></script>
+<script src="Chat/ChatController.js"></script>
+<script src="Chat/ChatService.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Amaranth" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -43,6 +49,12 @@
       </li>
       <li ng-show="currentUser.role=='ROLE_USER'">
         <a class="nav-link" href="#/updateProfile">Update Profile</a>
+      </li>
+      <li ng-show="currentUser.role=='ROLE_USER'">
+        <a class="nav-link" href="#/friendsPage">Friends</a>
+      </li>
+      <li ng-show="currentUser.role=='ROLE_USER'">
+        <a class="nav-link" href="#/chat">Chat</a>
       </li>
       <li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
         <a class="nav-link dropdown-toggle" href="#/viewBlogs" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

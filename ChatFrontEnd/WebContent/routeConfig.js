@@ -11,13 +11,16 @@ myApp.config(function($routeProvider,$locationProvider) {
 					.when("/myBlog",{templateUrl:"Blog/myBlog.html"})
 					.when("/addBlog",{templateUrl:"Blog/blog.html"})
 					.when("/logout",{templateUrl:"Home/logout.html"})
-					.when("/viewBlogs",{templateUrl:"Blog/allBlogs.html"})
+					.when("/viewBlogs",{templateUrl:"Blog/viewApprovedBlogs.html"})
 					.when("/adminBlog",{templateUrl:"Blog/adminBlog.html"})
 					.when("/readBlog",{templateUrl:"Blog/readBlog.html"})
 					.when("/manageBlogs",{templateUrl:"Blog/adminBlog.html"})
 					.when("/addJob",{templateUrl:"Job/addJob.html"})
 					.when("/viewJobs",{templateUrl:"Job/viewJobs.html"})
 					.when("/updateProfile",{templateUrl:"User/ProfilePicture.html"})
+					.when("/friendsPage",{templateUrl:"Friend/friends.html"})
+					.when("/editBlog",{templateUrl:"Blog/editBlog.html"})
+					.when("/chat",{templateUrl:"Chat/Chat.html"})
 });
 
 myApp.run(function($rootScope,$cookies){

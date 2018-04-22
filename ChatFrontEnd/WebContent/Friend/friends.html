@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<link rel="stylesheet" href="css/style.css">
+<title>Friends</title>
 </head>
 <body>
-
+ <div class="blog-header">
+    <div class="container">
+    	<h1 class="blog-title">Network with people!</h1>
+    	<p class="lead blog-description">This page provides you with an opportunity to network with people with similar interests.</p>
+	</div>
+</div>
+<hr>
+	<div class="container" ng-controller="FriendController">
+		<div class="row">
+			<div class="col-sm-8 blog-main" ng-repeat="friend in suggestedFrndList">
+				<div class="blog-post">
+					<img style="border-radius:30px;" src="http://localhost:8083/ChatMiddleware/getImage/{{friend.loginName}}" alt="Profile picture" width="100" height="150"/>
+					<h2 class="blog-post-title"><a href="#">{{friend.loginName}}</a></h2>
+					<p><button id="addFriend" class="btn btn-success btn-sm">Add Friend</button></p>
+				</div>
+			</div>
+			<div class="col-sm-3 offset-sm-1 blog-sidebar">
+				<div class="sidebar-module sidebar-module-inset">
+					<h4>About</h4>
+					<p>
+						Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras
+						mattis consectetur purus sit amet fermentum. Aenean lacinia
+						bibendum nulla sed consectetur.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>				
 </body>
 </html>

@@ -1,0 +1,29 @@
+<div class="container" ng-controller="ChatController">
+	<form ng-submit="addMessage()" name="chatMessage" class="form-horizontal">
+		<div class="login-box col-md-4 mx-auto w-50">
+		<div class="panel content-box">
+			<div class="panel-heading">					
+				<h4 class="title-box">Chat</h4>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<input type="text" ng-model="message" class="form-control">
+					<span class="count" ng-bind="max - message.length" style="text-align:right;">140</span>
+				</div>
+				<div class="form-group">
+					<input ng-disabled="message.length>140 || message.length==0" type="submit" class="btn btn-primary btn-block btn-lg" value="Post">
+				</div>
+			</div>				
+		</div>
+		</div>
+	</form>
+
+	<div class="container">
+		<p ng-repeat ="message in messages | orderBy:-time">
+			<span>
+				<img src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}" width="20" height=30"/>
+				{{message.message}}
+			</span>
+		</p>
+	</div>	
+</div>

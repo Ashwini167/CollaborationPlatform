@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Blogs</title>
+<style>
+.text-muted {
+	color:#ffffff!important;
+}
+.paddingInclude {
+	padding-top: 10px;
+	margin:5px;
+}
+</style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" ng-controller="BlogController">
+<div class="paddingInclude">
+<div class="card">
+  <div class="card-body">
+    <h4 align="center">Blogs</h4>
+  </div>
+</div>
+<div class="row paddingInclude">
+    <div class="col-sm-6 col-md-4 col-lg-4 " ng-repeat="blog in completeBlogList | filter:{status:'A'}">
+  	<div class="card text-white bg-secondary mb-3">
+    <div class="card-body">
+      <h4 class="card-title">{{blog.blogName}}</h4>
+      <p class="card-text text-truncate">{{blog.blogContent}}</p>
+      <button class="btn btn-primary btn-sm" ng-click="readMore(blog.blogId)">Read More</button>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Blog by: {{blog.userDetail.loginName}}</small>
+      <small class="text-muted" style="display:block;">Posted on {{blog.createdDate}}</small>
+      <small ng-show="currentUser==undefined" class="text-muted" style="display:block;">To Like or Comment, please <a href="#/login">Sign In</a> or <a href="#/register">Sign Up</a></small>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+</body>
+</html>

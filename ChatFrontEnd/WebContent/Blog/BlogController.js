@@ -20,7 +20,7 @@ myApp.controller("BlogController",function($scope, $rootScope, $http, $location)
 			}
 	};
 
-	$scope.listBlog = function($rootScope){
+	$scope.listBlog = function(){
 		console.log('Inside retrieve user blog function');
 		$http.get('http://localhost:8083/ChatMiddleware/showAllBlogsOfUser')
 			.then(function(response) {
@@ -97,6 +97,9 @@ myApp.controller("BlogController",function($scope, $rootScope, $http, $location)
 		$http.get('http://localhost:8083/ChatMiddleware/approveBlog/'+blogId)
 		.then(function(response){
 			console.log('Blog Approved');
+			$scope.blogListForAdmin();
+			alert('The blog is approved!');
+			location.path('/manageBlogs');
 		});
 	}
 	
@@ -105,6 +108,46 @@ myApp.controller("BlogController",function($scope, $rootScope, $http, $location)
 		$http.get('http://localhost:8083/ChatMiddleware/rejectBlog/'+blogId)
 		.then(function(response){
 			console.log('Blog Rejected');
+			$scope.blogListForAdmin();
+			alert('The blog is rejected!');
+			location.path('/manageBlogs');
 		});
-	}	
+	}
+	
+	$scope.deleteBlog = function(blogId){
+		console.log('Inside delete blog function: '+blogId);
+		$http.get('http://localhost:8083/ChatMiddleware/deleteBlog/'+blogId)
+		.then(function(response){
+			console.log('Blog Deleted');
+			alert('Blog deleted successfully!');
+			$scope.listBlog();
+			$location.path('/myBlog');
+		});
+	}
+	
+	$scope.editBlog = function(blogId){
+		console.log('To edit blog: '+blogId);
+		$http.get('http://localhost:8083/ChatMiddleware/getBlog/'+blogId)
+			.then(function(response) {
+			console.log('Inside show blog to update');
+			$rootScope.blogUpdate = response.data;
+			$location.path("/editBlog");
+		});
+	}
+	
+	$scope.updateBlog = function(blogId){
+		console.log('Inside update blog function: '+blogId);
+		$http.post('http://localhost:8083/ChatMiddleware/updateBlog/'+blogId,$rootScope.blogUpdate)
+		.then(function(response){
+			console.log('Blog updated');
+			alert('Blog updated successfully!');
+			$scope.listBlog();
+			$location.path('/myBlog');
+		});
+	}
+	
+	$scope.sortComment = function(comment) {
+		console.log('Inside sort comment '+comment.commentDate);
+		return new Date(comment.commentDate);
+	}
 });		

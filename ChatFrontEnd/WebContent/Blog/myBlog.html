@@ -23,24 +23,27 @@
   <label class="form-check-label" for="inlineCheckbox1">All</label>  
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="displaySelector" id="inlineCheckbox2" ng-model="displaySelector" value="Approved">
+  <input class="form-check-input" type="radio" name="displaySelector" id="inlineCheckbox2" ng-model="displaySelector" value="A">
   <label class="form-check-label" for="inlineCheckbox2">Approved</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="displaySelector" id="inlineCheckbox3" ng-model="displaySelector" value="Unapproved">
+  <input class="form-check-input" type="radio" name="displaySelector" id="inlineCheckbox3" ng-model="displaySelector" value="R">
   <label class="form-check-label" for="inlineCheckbox3">Unapproved</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="displaySelector" id="inlineCheckbox4" ng-model="displaySelector" value="Created">
+  <input class="form-check-input" type="radio" name="displaySelector" id="inlineCheckbox4" ng-model="displaySelector" value="C">
   <label class="form-check-label" for="inlineCheckbox4">Blogs awaiting approval</label>
 </div>
 
-<div class="card-deck paddingInclude">
-  <div class="card text-white bg-secondary mb-3" ng-repeat="blog in blogData | filter:displaySelector">    
+<div class="row paddingInclude">
+    <div class="col-sm-6 col-md-4 col-lg-4 " ng-repeat="blog in blogData | filter:{status: displaySelector}">
+  	<div class="card text-white bg-secondary mb-3">
     <div class="card-body">
       <h5 class="card-title">{{blog.blogName}}</h5>
       <p class="card-text text-truncate">{{blog.blogContent}}</p>
-      <a href="#" class="btn btn-primary" ng-click="readMore(blog.blogId)">Read More</a>&nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-danger">Delete</a>
+      <a href="#" class="btn btn-primary btn-sm" ng-click="readMore(blog.blogId)">Read More</a>&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-info btn-sm" ng-show="blog.status=='R'" ng-click="editBlog(blog.blogId)">Edit Blog</button>
+      <button class="btn btn-danger btn-sm" ng-show="blog.status=='C' || blog.status=='A'" ng-click="deleteBlog(blog.blogId)">Delete</button>
     </div>
     <div class="card-footer">
       <small class="text-muted">Blog by: {{blog.userDetail.loginName}}</small>	
@@ -48,6 +51,7 @@
       <small class="text-muted" style="display:block;">Status: {{blog.status}}</small>
     </div>
   </div>
+</div>
 </div>
 </div>
 </div>

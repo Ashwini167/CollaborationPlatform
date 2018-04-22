@@ -1,5 +1,5 @@
 myApp.controller("BlogCommentController",function($scope, $rootScope, $http, $location){
-
+	$scope.editMode = false;
 	$scope.blogComment = {
 			"commentId":0,"commentText":'', "commentDate":'',"status":'',
 			"blog" : {"blogId":0, "blogName":'', "blogContent":'', "createdDate":'', "likes":0, "status":'',
@@ -38,5 +38,17 @@ myApp.controller("BlogCommentController",function($scope, $rootScope, $http, $lo
 				$location.path("/readBlog");
 			});
 	}
-
+	
+	$scope.sortComment = function(comment) {
+	    return new Date(comment.commentDate);
+	};
+	
+	$scope.editBlogComment = function(commentId){
+		console.log('Inside edit blog comment');
+		$http.post('http://localhost:8083/ChatMiddleware/getComment/'+commentId)
+				.then(function(response){
+					$scope.displayEditComment = response.data;
+					$scope.editMode = true;
+				});
+	}
 });
