@@ -23,6 +23,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean addBlog(Blog blog) {
 		try {
 			log.info("Inside add Blog method -- try block");
+			blog.setStatus("C");
 			sessionFactory.getCurrentSession().save(blog);
 			return true;
 		}catch(Exception e) {
@@ -36,7 +37,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean deleteBlog(Blog blog) {
 		try {
 			log.info("Inside delete Blog method -- try block");
-			blog.setStatus("Disabled");
+			blog.setStatus("D");
 			sessionFactory.getCurrentSession().update(blog);
 			return true;
 		}catch(Exception e) {
@@ -50,6 +51,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean updateBlog(Blog blog) {
 		try {
 			log.info("Inside update Blog method -- try block");
+			blog.setStatus("C");
 			sessionFactory.getCurrentSession().update(blog);
 			return true;
 		}catch(Exception e) {
@@ -64,7 +66,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public List<Blog> blogListUser(String loginName) {
 		try {
 			log.info("Inside blog list retrieval for a specific user -- try block");
-			String hql = "from Blog where loginName='"+loginName+"' and status!="+"'Disabled'";
+			String hql = "from Blog where loginName='"+loginName+"' and status!="+"'D'";
 			return (List<Blog>)sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
 			log.error("Exception while blog list retrieval for a specific user", e);
@@ -77,7 +79,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean approveBlog(Blog blog) {
 		try {
 			log.info("Inside approve blog -- try block");
-			blog.setStatus("Approved");
+			blog.setStatus("A");
 			sessionFactory.getCurrentSession().update(blog);
 			return true;
 		}catch(Exception e) {
@@ -91,7 +93,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean rejectBlog(Blog blog) {
 		try {
 			log.info("Inside reject blog -- try block");
-			blog.setStatus("Unapproved");
+			blog.setStatus("R");
 			sessionFactory.getCurrentSession().update(blog);
 			return true;
 		}catch(Exception e) {
@@ -118,7 +120,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public List<Blog> blogList() {
 		try {
 			log.info("Inside retrieve all blogs (excluding deleted blogs) -- try block");
-			String hql = "from Blog where status !="+"'Disabled'";
+			String hql = "from Blog where status !="+"'D'";
 			log.debug("Retrieve all blogs method: HQL is "+hql);
 			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
@@ -148,7 +150,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public List<Blog> getUnapprovedBlogs() {
 		try {
 			log.info("Inside retrieve unapproved blogs -- try block");
-			String hql="from Blog where status="+"'Unapproved'";
+			String hql="from Blog where status='R'";
 			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
 			log.error("Exception while retrieving unapproved blog list", e);
@@ -162,7 +164,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public List<Blog> getApprovedBlogs() {
 		try {
 			log.info("Inside retrieve approved blogs -- try block");
-			String hql="from Blog where status="+"'Approved'";
+			String hql="from Blog where status='A'";
 			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		}catch(Exception e) {
 			log.error("Exception while retrieving approved blog list", e);
@@ -176,7 +178,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public List<Blog> getToBeApprovedBlogs() {
 		try {
 			log.info("Inside retrieve to be approved blogs -- try block");
-			String hql="from Blog where status="+"'Created'";
+			String hql="from Blog where status='C'";
 			return (List<Blog>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		} catch(Exception e) {
 			log.error("Exception while retrieving to be approved blog list", e);
@@ -189,7 +191,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean addBlogComment(BlogComment blogComment) {
 		try {
 			log.info("Inside add blog comment method -- try block");
-			blogComment.setStatus("posted");
+			blogComment.setStatus("P");
 			sessionFactory.getCurrentSession().save(blogComment);
 			return true;
 		}catch(Exception e) {
@@ -203,7 +205,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public boolean deleteBlogComment(BlogComment blogComment) {
 		try {
 			log.info("Inside delete blog comment method -- try block");
-			blogComment.setStatus("removed");
+			blogComment.setStatus("R");
 			sessionFactory.getCurrentSession().update(blogComment);
 			return true;
 		}catch(Exception e) {
@@ -243,7 +245,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public List<BlogComment> getBlogComments(int blogId) {
 		try {
 			log.info("Inside retrieve blog comments for a specific blog -- try block");
-			String hql="from BlogComment where status="+"'posted'"+" and blogId="+blogId;
+			String hql="from BlogComment where status="+"'P'"+" and blogId="+blogId;
 			return (List<BlogComment>) sessionFactory.getCurrentSession().createQuery(hql).list();
 		} catch(Exception e) {
 			log.error("Exception while retrieving comments for a specific blog", e);
