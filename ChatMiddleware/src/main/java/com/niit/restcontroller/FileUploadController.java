@@ -45,15 +45,11 @@ public class FileUploadController {
 	
 	@RequestMapping(value="/getImage/{loginName}",method=RequestMethod.GET) 
 	public @ResponseBody byte[] getProfilePicture(@PathVariable("loginName")String loginName,HttpSession session){
-		UserDetail userDetail = ((UserDetail)session.getAttribute("loggedInUser"));
-		if(userDetail==null)
+		System.out.println("Login Name is "+loginName);
+		ProfilePicture profilePicture = profilePictureDAO.viewProfilePicture(loginName);
+		if(profilePicture==null)
 			return null;
-		else {
-			ProfilePicture profilePicture = profilePictureDAO.viewProfilePicture(userDetail.getLoginName());
-			if(profilePicture==null)
-				return null;
-			else
-				return profilePicture.getImage();
-		}			
-	}
+		else
+			return profilePicture.getImage();
+		}
 }

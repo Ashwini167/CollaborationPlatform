@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
@@ -29,9 +28,10 @@ public class BlogController {
 	@GetMapping("/showAllBlogsOfUser")
 	public ResponseEntity<List<Blog>> showAllBlogsOfUser(HttpSession session) {
 		log.info("Inside showAllBlogs of a specific user");
+		
 		String loginName = ((UserDetail)session.getAttribute("loggedInUser")).getLoginName();
-		//String loginName = "Vijay";
 		log.debug("Login Name (show blogs of user method) from session is "+loginName);
+		
 		List<Blog> listUsersBlog = blogDAO.blogListUser(loginName);
 		if(listUsersBlog!=null) {
 			log.debug("User "+loginName+" has atleast one blog written");
@@ -45,13 +45,11 @@ public class BlogController {
 	
 	@PostMapping("/addBlog")
 	public ResponseEntity<String> addBlog(@RequestBody Blog blog, HttpSession session){		
-		//String loginName = "Vijay";
 		String loginName = ((UserDetail)session.getAttribute("loggedInUser")).getLoginName();
 		log.debug("Login Name from session (addBlog method) is "+loginName);
-		blog.setCreatedDate(new Date());
-		blog.setLikes(0);
-		blog.setStatus("Created");
 		
+		blog.setCreatedDate(new Date());
+		blog.setLikes(0);		
 		UserDetail user = new UserDetail();
 		user.setLoginName(loginName);
 		blog.setUserDetail(user);
@@ -128,7 +126,7 @@ public class BlogController {
 		}
 	} 
 	
-	@PutMapping("/updateBlog/{blogId}")
+	@PostMapping("/updateBlog/{blogId}")
 	public ResponseEntity<String> updateBlog(@PathVariable("blogId") int blogId,@RequestBody Blog blog) {
 		log.info("Inside update blogId "+blogId+" method");
 		log.debug("Update Blog::: Blog Name from form is: "+blog.getBlogName());
