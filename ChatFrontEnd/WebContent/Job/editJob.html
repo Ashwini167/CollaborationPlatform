@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Edit Job</title>
+</head>
+<body>
+<div class="container" ng-controller="JobController">
+    <form class="form-horizontal" role="form" method="POST">
+        <div class="login-box col-md-5 mx-auto w-50">
+			<div class="panel content-box">
+				<div class="panel-heading">				
+					<h4 class="title-box">Edit Job</h4>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<select class="form-control" ng-model="jobToEdit.status">
+  							<option selected value="A">Current status of the job</option>
+  							<option value="A">Active</option>
+  							<option value="E">Expired</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="jobToEdit.jobDesignation" class="form-control" placeholder="Enter job designation" required="required">
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="jobToEdit.company" class="form-control" placeholder="Enter the name of the company" required="required">
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="jobToEdit.salary" class="form-control" placeholder="Enter the salary (e.g: 3.5 to 5 LPA)" required="required">
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="jobToEdit.location" class="form-control" placeholder="Enter the work location" required="required">
+					</div>
+					<div class="form-group">
+						<textarea rows="5" ng-model="jobToEdit.jobDesc" class="form-control" placeholder="Enter the job description" required="required"> </textarea>
+					</div>
+					<div class="form-group">
+						<input type="text" ng-model="jobToEdit.skillSet" class="form-control" placeholder="Enter the desired skill set" required="required">
+					</div>
+					<div class="form-group">
+						<input type="submit" ng-click="updateJob(jobToEdit.jobId)" class="btn btn-primary btn-block btn-lg" value="Update Job Details">
+					</div>
+				</div>
+		</div>
+	</div>
+</form>
+</div>
+</body>
+</html>

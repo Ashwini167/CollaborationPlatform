@@ -1,5 +1,6 @@
 <head>
 <title>Jobs</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .card-text {
 	margin-bottom:2px;
@@ -7,32 +8,101 @@
 .headingClass {
 	text-decoration: underline;
 }
+.container {
+	margin-top:50px;
+	margin-bottom:30px;
+}
+.form-control {
+	width:35%;
+	display:inline;
+	font-size:80%
+}
+.paddingBottom {
+	padding-bottom:30px;
+}
+.myBackground{
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/job.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.table tr{
+	border-color: #ffffff!important;
+	font-size: 80%;
+}
+.table td {
+	padding: 8px;
+}
+
 </style>
 </head>
 <body>
+<div class="container-fluid myBackground">
 <div class="container" ng-controller="JobController">
+<div class="container text-center my-auto text-white">
+	<h1 class="mb-1">Active Jobs</h1>
+</div>
+	<div class="paddingBottom">
+		<input class="form-control mr-sm-2" type="search" placeholder="Search jobs (enter keywords like location, skills, etc)" aria-label="Search" ng-model="jobSearch" length="25">
+    	<button class="btn btn-sm btn-outline-success" type="submit">Search</button>
+    </div>
 <div id="accordion" close-others=false>
-	<div class="card" ng-repeat="job in listOfJobs">
+	<div class="card w-50" ng-repeat="job in listOfJobs | filter:jobSearch">
     <div class="card-header" id="heading{{job.jobId}}">
       <button class="btn btn-link" data-toggle="collapse" data-target="#{{job.jobId}}" aria-expanded="true" aria-controls="{{job.jobId}}">
           {{job.jobDesignation}}
       </button>
     </div>
-    <div id="{{job.jobId}}" class="collapse show" aria-labelledby="heading{{job.jobId}}" data-parent="#accordion">
+    <div id="{{job.jobId}}" class="collapse" aria-labelledby="heading{{job.jobId}}" data-parent="#accordion">
       <div class="card-body">
-        <p class="card-text"><span class="headingClass">Company:</span> {{job.company}}</p>
-        <p class="card-text"><span class="headingClass">Location:</span> {{job.location}}</p>
-        <p class="card-text"><span class="headingClass">Salary:</span> {{job.salary}}</p>
-        <p class="card-text"><span class="headingClass">Skill set:</span> {{job.skillSet}}</p>
-        <p class="card-text"><span class="headingClass">JD:</span> {{job.jobDesc}}</p>
-        <p class="card-text" style="margin-top:10px">
-        	<button class="btn btn-primary btn-sm" ng-show="currentUser.role=='ROLE_USER'" ng-click="apply(job.jobId)">Apply</button>
-        	<button class="btn btn-success btn-sm" ng-show="currentUser.role=='ROLE_ADMIN'" ng-click="update(job.jobId)">Update</button>
-        	<button class="btn btn-danger btn-sm" ng-show="currentUser.role=='ROLE_ADMIN'" ng-click="delete(job.jobId)">Delete</button> 
-        </p>
+      <table class="table table-responsive table-condensed">
+      	<tr>
+      		<td>Company</td>
+      		<td>{{job.company}}</td>
+      	</tr>
+      	<tr>
+      		<td>Location</td>
+      		<td>{{job.location}}</td>
+      	</tr>
+      	<tr>
+      		<td>Salary</td>
+      		<td>{{job.salary}}</td>
+      	</tr>
+      	<tr>
+      		<td>Skill set</td>
+      		<td>{{job.skillSet}}</td>
+      	</tr>
+      	<tr>
+      		<td>Job Description</td>
+      		<td>{{job.jobDesc}}</td>
+      	</tr>
+      	<tr ng-show="currentUser.role==undefined">
+      		<td colspan="2"><small>To Apply for this job, please <a href="#/login">Sign In</a> or <a href="#/register">Sign Up</a></small></td>
+      	</tr>
+      	<tr ng-show="currentUser.role=='ROLE_USER' && !applied[job.jobId]">
+      		<td colspan="2" align="center"><button class="btn btn-primary btn-sm" ng-click="apply(job.jobId)"><i class="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;Apply</button></td>
+      	</tr>
+      	<tr ng-show="currentUser.role=='ROLE_USER' && applied[job.jobId]">
+      		<td align="right"><button class="btn btn-success btn-sm">Applied&nbsp;<i class="fa fa-check" aria-hidden="true"></i></button></td>
+        	<td align="left"><button class="btn btn-danger btn-sm" ng-click="withdraw(job.jobId)">Withdraw&nbsp;<i class="fa fa-minus-circle" aria-hidden="true"></i></button></td>
+      	</tr>
+      	<tr ng-show="currentUser.role=='ROLE_ADMIN'">
+      		<td align="right"><button class="btn btn-success btn-sm" ng-click="editJob(job.jobId)">Update</button></td>
+        	<td align="left"><button class="btn btn-danger btn-sm" ng-click="deleteJob(job.jobId)">Delete</button></td>
+      	</tr>	
+      </table>
       </div>
     </div>
   </div>
+</div>
 </div>
 </div>
 </body>

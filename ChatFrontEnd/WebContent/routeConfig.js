@@ -21,6 +21,9 @@ myApp.config(function($routeProvider,$locationProvider) {
 					.when("/friendsPage",{templateUrl:"Friend/friends.html"})
 					.when("/editBlog",{templateUrl:"Blog/editBlog.html"})
 					.when("/chat",{templateUrl:"Chat/Chat.html"})
+					.when("/jobApplied",{templateUrl:"Job/jobApplied.html"})
+					.when("/editJob",{templateUrl:"Job/editJob.html"})
+					.when("/myAppliedJobs",{templateUrl:"Job/myAppliedJobs.html"})
 });
 
 myApp.run(function($rootScope,$cookies){

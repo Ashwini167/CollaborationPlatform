@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>My Job Applications</title>
+<style>
+.card-text {
+	margin-bottom:2px;
+}
+.headingClass {
+	text-decoration: underline;
+}
+.container {
+	margin-top:50px;
+	margin-bottom:30px;
+}
+.form-control {
+	width:35%;
+	display:inline;
+	font-size:80%
+}
+.paddingBottom {
+	padding-bottom:30px;
+}
+.myBackground{
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/job.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.table tr{
+	border-color: #ffffff!important;
+	font-size: 80%;
+}
+.table td {
+	padding: 8px;
+}
+</style>
+</head>
+<body>
+<div class="cotainer-fluid myBackground">
+<div class="container" ng-controller="JobController">
+<h4 align="center" style="margin-bottom:10px">My Job Applications</h4>
+<div id="accordion" close-others=false>
+	<div class="card w-50" ng-repeat="application in appliedJobs">
+    <div class="card-header" id="heading{{application.jobApplicationId}}">
+      <button class="btn btn-link" data-toggle="collapse" data-target="#{{application.jobApplicationId}}" aria-expanded="true" aria-controls="{{application.jobApplicationId}}">
+          {{application.job.jobDesignation}}
+      </button>
+      <small style="color: darkgreen; float:right">Status: {{application.status | statusCheck}}</small>
+    </div>
+    <div id="{{application.jobApplicationId}}" class="collapse" aria-labelledby="heading{{application.jobApplicationId}}" data-parent="#accordion">
+      <div class="card-body">
+      <table class="table table-responsive table-condensed">
+      	<tr>
+      		<td>Company</td>
+      		<td>{{application.job.company}}</td>
+      	</tr>
+      	<tr>
+      		<td>Location</td>
+      		<td>{{application.job.location}}</td>
+      	</tr>
+      	<tr>
+      		<td>Salary</td>
+      		<td>{{application.job.salary}}</td>
+      	</tr>
+      	<tr>
+      		<td>Skill set</td>
+      		<td>{{application.job.skillSet}}</td>
+      	</tr>
+      	<tr>
+      		<td>Job Description</td>
+      		<td>{{application.job.jobDesc}}</td>
+      	</tr>
+      	<tr>
+      		<td>Applied On</td>
+      		<td>{{application.appliedDate}}</td>
+      	</tr>
+      	<tr class="info">
+      		<td>Current Status</td>
+      		<td>{{application.status | statusCheck}}</td>
+      	</tr>	
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</body>
+</html>

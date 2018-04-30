@@ -2,14 +2,36 @@
 <html>
 <head>
 <title>Blogs</title>
+<style>
+.myBackground {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/addBlog.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}	
+
+.btn-primary {
+	background-color: #f6c100!important;
+	color: black;
+}
+</style>
+
 </head>
 <body>
+<div class="container-fluid myBackground">
 <div class="container" ng-controller="BlogController">
 <form class="form-horizontal" method="post">
 	<div class="login-box col-md-6 mx-auto w-50">
 		<div class="panel content-box">
 			<div class="panel-heading">				
-				<h4 class="title-box">Add Blog</h4>
+				<h4 class="text-white title-box">Add Blog</h4>
 			</div>
 			<div class="panel-body">
 					<div class="form-group">
@@ -26,5 +48,6 @@
 	</div>
 </form>
 </div>	
+</div>
 </body>
 </html>

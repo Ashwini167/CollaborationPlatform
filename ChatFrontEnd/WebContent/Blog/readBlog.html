@@ -5,10 +5,27 @@
 .paddingInclude {
 	padding-top: 25px;
 }
+.myBackground {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/readBlog.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.card-header {
+	background-color:#ffc0cb9c;
+}
 </style>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="container-fluid myBackground">
 <div class="container paddingInclude" ng-controller="BlogController">
 <div class="card">
   <div class="card-header">
@@ -39,7 +56,7 @@
   		<small>To Like or Comment on this blog, please <a href="#/login">Sign In</a> or <a href="#/register">Sign Up</a></small>
   	</li>
   </ul>
-  <ul class="list-group list-group-flush" ng-repeat="comment in commentList | orderBy:sortComment:true">
+  <ul class="list-group list-group-flush" ng-repeat="comment in commentList | orderBy:sortComment:true" ng-controller="BlogCommentController">
     	<li class="list-group-item" ng-class-odd="'odd'" ng-class-even="'even'">
     		<small><b>{{comment.userDetail.loginName}} says: </b></small>
     		<small ng-show="editMode">
@@ -48,9 +65,10 @@
   			</small>
     		<small ng-hide="editMode">{{comment.commentText}}</small>
     		<small style="display:block;"><b>Posted on: </b>{{comment.commentDate}}</small>
-    		<small ng-show="currentUser.loginName==comment.userDetail.loginName"><a href="" ng-click="editBlogComment(comment.commentId)">Edit</a></small>
+    		<small ng-show="currentUser.loginName==comment.userDetail.loginName"><a href="" ng-click="deleteBlogComment(comment.commentId)">Remove Comment</a></small>
     	</li>
   </ul>
+</div>
 </div>
 </div>	
 </body>

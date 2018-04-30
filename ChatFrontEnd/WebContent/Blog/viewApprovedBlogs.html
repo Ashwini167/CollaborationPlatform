@@ -9,21 +9,43 @@
 	padding-top: 10px;
 	margin:5px;
 }
+.myBackground{
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/bg-callout.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}	
+.btn-primary {
+	background-color:#563d7c!important;
+}
+
+.bg-info {
+	background-color: #3ea8b9;
+}
+
+a {
+	color:darkgreen!important
+}
+
 </style>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-
+<div class="container-fluid myBackground">
 <div class="container" ng-controller="BlogController">
-<div class="paddingInclude">
-<div class="card">
-  <div class="card-body">
-    <h4 align="center">Blogs</h4>
-  </div>
+<div class="container text-center my-auto">
+	<h1 class="mb-1">Blogs</h1>
 </div>
 <div class="row paddingInclude">
     <div class="col-sm-6 col-md-4 col-lg-4 " ng-repeat="blog in completeBlogList | filter:{status:'A'}">
-  	<div class="card text-white bg-secondary mb-3">
+  	<div class="card text-white bg-transparent mb-3">
     <div class="card-body">
       <h4 class="card-title">{{blog.blogName}}</h4>
       <p class="card-text text-truncate">{{blog.blogContent}}</p>
@@ -38,6 +60,6 @@
   </div>
   </div>
   </div>
-  </div>
+ </div> 
 </body>
 </html>

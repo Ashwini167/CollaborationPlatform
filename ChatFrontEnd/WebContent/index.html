@@ -1,15 +1,37 @@
 <html>
 <head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.js"></script>
+
+<script src="js/stylish-portfolio.min.js"></script>
+<link rel="stylesheet" href="css/stylish-portfolio.min.css">
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap-grid.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap-reboot.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amaranth" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic">
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+
 <script src="routeConfig.js"></script>
 <script src="User/UserController.js"></script>
 <script src="Blog/BlogController.js"></script>
@@ -18,74 +40,90 @@
 <script src="Friend/FriendController.js"></script>
 <script src="Chat/ChatController.js"></script>
 <script src="Chat/ChatService.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Amaranth" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="css/style.css">
+
 </head>
-<body ng-app="myApp">
-<nav class="navbar navbar-expand-lg sticky-top">
-  <a class="navbar-brand" href="#">
-    <img src="images/Prameya_Logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
-	Prameya Academy
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#/home">Home</a>
-      </li>
-      <li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
-        <a class="nav-link" href="#/login">Login</a>
-      </li>
-      <li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
-        <a class="nav-link" href="#/register">Register</a>
-      </li>
-      <li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
-        <a class="nav-link" href="#/contactUs">Contact Us</a>
-      </li>
-      <li ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
-        <a class="nav-link" href="#/viewBlogs">Read our Blog</a>
-      </li>
-      <li ng-show="currentUser.role=='ROLE_USER'">
-        <a class="nav-link" href="#/updateProfile">Update Profile</a>
-      </li>
-      <li ng-show="currentUser.role=='ROLE_USER'">
-        <a class="nav-link" href="#/friendsPage">Friends</a>
-      </li>
-      <li ng-show="currentUser.role=='ROLE_USER'">
-        <a class="nav-link" href="#/chat">Chat</a>
-      </li>
-      <li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
-        <a class="nav-link dropdown-toggle" href="#/viewBlogs" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Blogs
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		  <a class="dropdown-item" href="#/manageBlogs" ng-show="currentUser.role=='ROLE_ADMIN'">Manage Blogs</a>
-		  <a class="dropdown-item" href="#/viewBlogs" ng-show="currentUser.role=='ROLE_USER'">Read Blogs</a>
-          <a class="dropdown-item" href="#/addBlog">Add Blog</a>
-          <a class="dropdown-item" href="#/myBlog">My Blogs</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_ADMIN'">
-      	<a class="nav-link dropdown-toggle" href="#/viewJobs" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Job
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-      		<a class="nav-link" href="#/addJob">Add Job</a>
-      		<a class="nav-link" href="#/viewJobs">View Jobs</a>
-      	</div>
-      </li>
-    </ul>
-    <form ng-controller="UserController">
-	<span class="navbar-text" ng-hide="currentUser==undefined">
-		<img style="border-radius:30px;" src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}" alt="Your profile picture" width="50" height="50"/>
-		<font class="my-2 my-sm-0" color="darkgreen">Welcome, {{currentUser.username}}!</font>&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="submit" value="Logout" class="btn btn-sm btn-outline-success my-2 my-sm-0" ng-click="logout()">	
-	</span>	   
-	</form> 
-  </div>
-</nav>
+
+<body ng-app="myApp" id="page-top">
+	<nav class="navbar navbar-expand-lg sticky-top">
+		<a class="navbar-brand" href="#"> <img
+			src="images/Prameya_Logo.jpg" width="30" height="30"
+			class="d-inline-block align-top" alt=""> <span
+			style="color: darkgreen">Prameya Academy</span>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" href="#/home">Home</a>
+				</li>
+				<li class="nav-item"
+					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+					<a class="nav-link" href="#/login">Login</a>
+				</li>
+				<li class="nav-item"
+					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+					<a class="nav-link" href="#/register">Register</a>
+				</li>
+				<li
+					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+					<a class="nav-link" href="#/viewBlogs">Read our Blog</a>
+				</li>
+				<li class="nav-item" class="nav-item"
+					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+					<a class="nav-link" href="#/viewJobs">Jobs</a>
+				</li>
+				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'"><a
+					class="nav-link" href="#/updateProfile">Update Profile</a></li>
+				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'"><a
+					class="nav-link" href="#/friendsPage">Friends</a></li>
+				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'"><a
+					class="nav-link" href="#/chat">Chat</a></li>
+				<li class="nav-item dropdown"
+					ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+					<a class="nav-link dropdown-toggle" href="#/viewBlogs"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Blogs </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="#/manageBlogs"
+							ng-show="currentUser.role=='ROLE_ADMIN'">Manage Blogs</a> <a
+							class="dropdown-item" href="#/viewBlogs"
+							ng-show="currentUser.role=='ROLE_USER'">Read Blogs</a> <a
+							class="dropdown-item" href="#/addBlog">Add Blog</a> <a
+							class="dropdown-item" href="#/myBlog">My Blogs</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown" ng-hide="currentUser.role==undefined">
+					<a class="nav-link dropdown-toggle" href="#/viewJobs"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Job </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="nav-link" href="#/addJob"
+							ng-show="currentUser.role=='ROLE_ADMIN'">Add Job</a> <a
+							class="nav-link" href="#/viewJobs">View Jobs</a> <a
+							class="nav-link" href="#/myAppliedJobs">My Jobs Applications</a>
+					</div>
+				</li>
+				<li class="nav-item"
+					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+					<a class="nav-link" href="#/contactUs">Contact Us</a>
+				</li>
+			</ul>
+			<form ng-controller="UserController">
+				<span class="navbar-text" ng-hide="currentUser==undefined"> <img
+					style="border-radius: 30px;"
+					src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}"
+					onerror="this.src='images/profile.jpg'" alt="Your profile picture"
+					width="50" height="50" /> <font class="my-2 my-sm-0"
+					color="darkgreen">Welcome, {{currentUser.username}}!</font>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="submit" value="Logout"
+					class="btn btn-sm btn-outline-success my-2 my-sm-0"
+					ng-click="logout()">
+				</span>
+			</form>
+		</div>
+	</nav>
+
 <div ng-view></div>
 
 </body>

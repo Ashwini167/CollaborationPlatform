@@ -1,29 +1,50 @@
-<div class="container" ng-controller="ChatController">
-	<form ng-submit="addMessage()" name="chatMessage" class="form-horizontal">
-		<div class="login-box col-md-4 mx-auto w-50">
-		<div class="panel content-box">
-			<div class="panel-heading">					
-				<h4 class="title-box">Chat</h4>
-			</div>
-			<div class="panel-body">
-				<div class="form-group">
-					<input type="text" ng-model="message" class="form-control">
-					<span class="count" ng-bind="max - message.length" style="text-align:right;">140</span>
-				</div>
-				<div class="form-group">
-					<input ng-disabled="message.length>140 || message.length==0" type="submit" class="btn btn-primary btn-block btn-lg" value="Post">
-				</div>
-			</div>				
-		</div>
-		</div>
-	</form>
-
-	<div class="container">
-		<p ng-repeat ="message in messages | orderBy:-time">
-			<span>
-				<img src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}" width="20" height=30"/>
-				{{message.message}}
-			</span>
-		</p>
-	</div>	
-</div>
+<html>
+<head>
+	<link href="css/myCss.css" rel="stylesheet">
+	<script>
+  		alert('Inside script');
+  		alert('Current user is '+$rootScope.currentUser.loginName);
+		$(function(){
+    		$("sortable").sortable();
+    		$("#sortable").disableSelection();
+  		});
+  	</script>
+</head>
+<body>
+<section class="row-section" ng-controller="ChatController">
+    <div class="container">
+	    <div class="row">
+		    <h2 class="text-center"><span>Chat</span></h2>
+	    </div>
+	    <div class="col-md-10 offset-md-1 row-block">
+	        <ul id="sortable">
+				<li>
+					<div class="media">
+						<form ng-submit="addMessage()" name="chatMessage">
+							<div class="media-left align-self-center">
+								<span>Enter your message:</span>
+							</div>
+							<div class="media-body">
+								<input type="text" ng-model="message" class="form-control"> 
+								<small style="float:right"><span class="count" ng-bind="max - message.length" style="text-align:right;">140</span></small>
+								<button style="display:inline; margin:10px" ng-disabled="message.length>140 || message.length==0" type="submit" class="btn btn-sm btn-default">Send</button>
+							</div>
+						</form>
+					</div>
+				</li>
+				<li ng-repeat ="message in messages | orderBy:-time">
+					<div class="media">
+	            		<div class="media-left align-self-center">       			
+	                		<img class="rounded-circle" src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}" alt="{{currentUser.loginName}}"/>
+	            		</div>
+	            		<div class="media-body">
+	                		<p>{{message.message}}</p>
+	            		</div>
+	        		</div>
+	        	</li>        
+	        </ul>
+	    </div>
+	</div>
+</section>
+</body>
+</html>
