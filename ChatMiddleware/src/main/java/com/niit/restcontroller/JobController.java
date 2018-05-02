@@ -7,11 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
@@ -29,7 +27,7 @@ public class JobController {
 	@PostMapping("/addJob")
 	public ResponseEntity<String> addJob(@RequestBody Job job) {
 		job.setJobPostedOn(new Date());
-		job.setStatus("Active");
+		job.setStatus("A");
 		
 		log.debug("Job Desig: "+job.getJobDesignation());
 		log.debug("Job Desc: "+job.getJobDesc());
@@ -47,7 +45,7 @@ public class JobController {
 		}
 	}	
 	
-	@DeleteMapping("/deleteJob/{jobId}")
+	@GetMapping("/deleteJob/{jobId}")
 	public ResponseEntity<String> deleteJob(@PathVariable("jobId")int jobId) {
 		Job job = jobDAO.viewJob(jobId);
 		
@@ -60,7 +58,7 @@ public class JobController {
 		}
 	}
 	
-	@PutMapping("/updateJob/{jobId}")
+	@PostMapping("/updateJob/{jobId}")
 	public ResponseEntity<String> updateJob(@PathVariable("jobId")int jobId, @RequestBody Job job) {
 		
 		if(jobDAO.updateJob(job)) {
