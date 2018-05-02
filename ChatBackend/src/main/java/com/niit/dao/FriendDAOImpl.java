@@ -2,8 +2,10 @@ package com.niit.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.transaction.Transactional;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,9 @@ public class FriendDAOImpl implements FriendDAO {
 	@Override
 	public boolean addFriendReq(Friend friend) {
 		try {
-			friend.setStatus("Requested");
+			friend.setStatus("C");
+			friend.setIsOnline("N");
+			friend.setRequestedOrAcceptedOn(new Date());
 			sessionFactory.getCurrentSession().save(friend);
 			return true;
 		}catch(Exception e) {
@@ -33,7 +37,7 @@ public class FriendDAOImpl implements FriendDAO {
 	@Override
 	public boolean acceptFriend(Friend friend) {
 		try {
-			friend.setStatus("Accepted");
+			friend.setStatus("A");
 			friend.setRequestedOrAcceptedOn(new Date());
 			sessionFactory.getCurrentSession().update(friend);
 			return true;
@@ -47,7 +51,7 @@ public class FriendDAOImpl implements FriendDAO {
 	@Override
 	public boolean rejectFriend(Friend friend) {
 		try {
-			friend.setStatus("Rejected");
+			friend.setStatus("R");
 			sessionFactory.getCurrentSession().update(friend);
 			return true;
 		}catch(Exception e) {
@@ -59,10 +63,15 @@ public class FriendDAOImpl implements FriendDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<Friend> viewFriendRequests(String loginName) {
+	public Map<Integer,UserDetail> viewFriendRequests(String loginName) {
 		try {
-			String hql="from Friend where status="+"'Requested'"+" and friend='"+loginName+"'";
-			return (List<Friend>) sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql = "select friendId, requestor from friend where status='C' AND tofriend='"+loginName+"'";
+			List<Object[]> objList = (List<Object[]>)sessionFactory.getCurrentSession().createSQLQuery(hql).list();	
+			Map<Integer,UserDetail> pendingFriends = new HashMap<Integer,UserDetail>();
+			for(Object[] obj:objList) {
+				pendingFriends.put(Integer.parseInt(obj[0].toString()), (UserDetail)sessionFactory.getCurrentSession().get(UserDetail.class, obj[1].toString()));
+			}
+			return pendingFriends;
 		} catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -74,8 +83,14 @@ public class FriendDAOImpl implements FriendDAO {
 	@Override
 	public List<Friend> viewFriendsList(String loginName) {
 		try {
-			String hql="from Friend where status="+"'Accepted'"+" and requestor='"+loginName+"'";
-			return (List<Friend>) sessionFactory.getCurrentSession().createQuery(hql).list();
+			String hql= "from Friend where status='A' AND (requestor='"+loginName+"' OR friend='"+loginName+"')";
+			return sessionFactory.getCurrentSession().createQuery(hql).list();
+			//List<Object[]> objList = (List<Object[]>)sessionFactory.getCurrentSession().createSQLQuery(hql).list();	
+			//Map<Integer,UserDetail> friendsList = new HashMap<Integer,UserDetail>();
+			//for(Object[] obj:objList) {
+				//friendsList.put(Integer.parseInt(obj[0].toString()), (UserDetail)sessionFactory.getCurrentSession().get(UserDetail.class, obj[1].toString()));
+			//}
+			//return friendsList;
 		} catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -91,8 +106,7 @@ public class FriendDAOImpl implements FriendDAO {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
 		}
-	}
-	
+	}	
 	
 	@SuppressWarnings("unchecked")
 	@Transactional

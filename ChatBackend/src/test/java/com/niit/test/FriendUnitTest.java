@@ -2,10 +2,9 @@ package com.niit.test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Date;
 import java.util.List;
-
+import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -31,10 +30,10 @@ public class FriendUnitTest {
 	public void addFriendTest() {
 		Friend friend = new Friend();
 		UserDetail requestor = new UserDetail();
-		requestor.setLoginName("Anu");
+		requestor.setLoginName("Subha");
 		friend.setRequestor(requestor);
 		UserDetail toFriend = new UserDetail();
-		toFriend.setLoginName("Subha");
+		toFriend.setLoginName("Guru");
 		friend.setFriend(toFriend);
 		
 		friend.setIsOnline("Y");
@@ -46,21 +45,19 @@ public class FriendUnitTest {
 	
 	@Ignore
 	@Test 
-	public void getFriendRequestTest() {
-		Friend frnd = friendDAO.getFriendRequest(100);
+	public void getFriendTest() {
+		Friend frnd = friendDAO.getFriendRequest(2300);
 		assertNotNull("Problem in retrieving friend request details",frnd);
+		System.out.println("Friend ID:::: "+frnd.getFriendId()+">>>Requestor:::: "+frnd.getRequestor().getLoginName()+">>>ToFriend:::: "+frnd.getFriend().getLoginName());
 	}
 	
 	@Ignore
 	@Test
 	public void viewFriendRequestsTest() {
-		List<Friend> friendRequests = friendDAO.viewFriendRequests("Anu");
-		System.out.println("Friend ID \t Requestor Name \t To Friend \t Status");
-		for(Friend friend:friendRequests) {
-			System.out.print(friend.getFriendId()+"\t\t");
-			System.out.print(friend.getRequestor().getUsername()+"\t\t");
-			System.out.print(friend.getFriend().getUsername()+"\t");
-			System.out.println(friend.getStatus());
+		Map<Integer, UserDetail> friendRequests = friendDAO.viewFriendRequests("Subha");
+		System.out.println("Requested friends are ");
+		for(Map.Entry<Integer,UserDetail> entry : friendRequests.entrySet()) {
+			System.out.println(entry.getKey()+"::::"+entry.getValue().getLoginName());
 		}
 		assertNotNull("Problem in retrieving friend requests",friendRequests);
 	}
@@ -68,7 +65,7 @@ public class FriendUnitTest {
 	@Ignore
 	@Test
 	public void acceptFriendTest() {
-		Friend frnd = friendDAO.getFriendRequest(50);
+		Friend frnd = friendDAO.getFriendRequest(2450);
 		assertTrue("Problem in accepting friend request!",friendDAO.acceptFriend(frnd));
 	}
 	
@@ -79,19 +76,17 @@ public class FriendUnitTest {
 		assertTrue("Problem in rejecting friend request",friendDAO.rejectFriend(frnd));
 	}
 	
-	@Ignore
 	@Test
 	public void viewFriendsListTest() {
-		List<Friend> friendRequests = friendDAO.viewFriendsList("Loga");
-		System.out.println("Friend ID \t Friends \t Status");
-		for(Friend friend:friendRequests) {
-			System.out.print(friend.getFriendId()+"\t\t");
-			System.out.print(friend.getFriend().getUsername()+"\t\t");
-			System.out.println(friend.getStatus());
+		List<Friend> friendsList = friendDAO.viewFriendsList("Subha");
+		System.out.println("FriendID\tFrom\t\tTo");
+		for(Friend friend:friendsList) {
+			System.out.println(friend.getFriendId()+"\t"+friend.getRequestor().getLoginName()+"\t"+friend.getFriend().getLoginName());
 		}
-		assertNotNull("Problem in retrieving friend requests",friendRequests);
+		assertNotNull("Problem in retrieving friends list",friendsList);
 	}
 	
+	@Ignore
 	@Test
 	public void viewSuggestedFriendsTest() {
 		List<UserDetail> suggestedFriends = friendDAO.viewSuggestedFriends("Anu");
@@ -99,6 +94,5 @@ public class FriendUnitTest {
 		for(UserDetail user:suggestedFriends) {
 			System.out.println(user.getLoginName());
 		}
-	}
-	
+	}	
 }

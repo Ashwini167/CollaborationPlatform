@@ -14,7 +14,7 @@ public class ProfilePicture {
 	@GeneratedValue
 	private int picId;
 	@OneToOne
-	@JoinColumn(name="loginName")
+	@JoinColumn(referencedColumnName="loginName", unique=true, name="loginName")
 	private UserDetail userDetail;
 	private byte[] image;
 	

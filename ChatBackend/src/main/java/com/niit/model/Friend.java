@@ -6,11 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -22,13 +20,11 @@ public class Friend {
 	private int friendId;
 	private String status;
 	private String isOnline;
-	@OneToOne
-	@JoinTable(name="requestor")
-	@JoinColumn(name="loginName")
+	@ManyToOne
+	@JoinColumn(referencedColumnName="loginName",name="requestor")
 	private UserDetail requestor;
-	@OneToOne
-	@JoinTable(name="Tofriend")
-	@JoinColumn(name="loginName")
+	@ManyToOne
+	@JoinColumn(referencedColumnName="loginName",name="toFriend")
 	private UserDetail friend;
 	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="dd-MMM-yyyy")
 	private Date requestedOrAcceptedOn;	

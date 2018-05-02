@@ -29,7 +29,7 @@ public class JobDAOImpl implements JobDAO {
 	@Override
 	public boolean deleteJob(Job job) {
 		try {
-			job.setStatus("disabled");
+			job.setStatus("D");
 			sessionFactory.getCurrentSession().update(job);
 			return true;
 		}catch(Exception e) {
@@ -66,7 +66,7 @@ public class JobDAOImpl implements JobDAO {
 	@Override
 	public List<Job> jobList() {
 		try {
-			return (List<Job>)sessionFactory.getCurrentSession().createQuery("from Job").list();
+			return (List<Job>)sessionFactory.getCurrentSession().createQuery("from Job where status='A'").list();
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -77,7 +77,7 @@ public class JobDAOImpl implements JobDAO {
 	@Override
 	public int applyJob(ApplyJob appln) {
 		try {
-			appln.setStatus("applied");
+			appln.setStatus("A");
 			return (int)sessionFactory.getCurrentSession().save(appln);
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
@@ -99,9 +99,9 @@ public class JobDAOImpl implements JobDAO {
 	
 	@Transactional
 	@Override
-	public ApplyJob viewJobAppln(int applnId) {
+	public ApplyJob viewJobAppln(int jobId,String loginName) {
 		try {
-			return (ApplyJob)sessionFactory.getCurrentSession().get(ApplyJob.class, applnId);
+			return (ApplyJob)sessionFactory.getCurrentSession().createQuery("from ApplyJob where jobId="+jobId+"and loginName='"+loginName+"'").list().get(0);
 		}catch(Exception e) {
 			System.out.println("There is an exception here! \n"+e);
 			return null;
@@ -124,7 +124,7 @@ public class JobDAOImpl implements JobDAO {
 	@Override
 	public boolean withdrawApplication(ApplyJob appln) {
 		try {
-			appln.setStatus("withdrawn");
+			appln.setStatus("W");
 			sessionFactory.getCurrentSession().update(appln);
 			return true;
 		}catch(Exception e) {

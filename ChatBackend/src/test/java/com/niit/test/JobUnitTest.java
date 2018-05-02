@@ -129,7 +129,7 @@ public class JobUnitTest {
 	@Test
 	public void withdrawApplicationTest(){
 		ApplyJob appln = new ApplyJob();
-		appln = jobDAO.viewJobAppln(50050);
+		appln = jobDAO.viewJobAppln(50050,"Anu");
 		assertTrue("Problem in withdrawing the application",jobDAO.withdrawApplication(appln));
 	}
 	
@@ -137,7 +137,7 @@ public class JobUnitTest {
 	@Test
 	public void viewJobApplnTest() {
 		ApplyJob appln = new ApplyJob();
-		appln = jobDAO.viewJobAppln(50050);
+		appln = jobDAO.viewJobAppln(50050,"Anu");
 		assertNotNull("Problem in withdrawing the application",appln);
 	}
 }
