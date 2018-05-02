@@ -29,8 +29,10 @@ myApp.controller("JobController",function($scope, $rootScope, $http, $location,$
 				.then(function(response){
 					console.log('Inside jobList response');
 					$scope.listOfJobs = response.data;
-					if($rootScope.currentUser.role=="ROLE_USER"){
-						$scope.applicationStatus($scope.listOfJobs);
+					if(!($rootScope.currentUser==undefined)){
+						if($rootScope.currentUser.role=="ROLE_USER"){
+							$scope.applicationStatus($scope.listOfJobs);
+						}
 					}
 				});
 	}
@@ -109,13 +111,14 @@ myApp.controller("JobController",function($scope, $rootScope, $http, $location,$
 	}
 	
 	$scope.viewAppliedJobs = function() {
-		if($rootScope.currentUser.role=="ROLE_USER"){
-			$http.get('http://localhost:8083/ChatMiddleware/viewAppliedJobs/'+$rootScope.currentUser.loginName)
+		if(!($rootScope.currentUser==undefined)){
+			if($rootScope.currentUser.role=="ROLE_USER"){
+				$http.get('http://localhost:8083/ChatMiddleware/viewAppliedJobs/'+$rootScope.currentUser.loginName)
 					.then(function(response){
-						console.log('Inside response');
-						console.log(response.data);
+						console.log('Inside response of viewApplied Jobs');
 						$scope.appliedJobs = response.data;						
 					})
+			}
 		}
 	}
 	
@@ -127,7 +130,7 @@ myApp.filter("statusCheck",function(){
 	return function(status){
 		switch(status){
 		case 'A':
-			return "Applied";
+			return "Active";
 		case 'W':
 			return "Withdrawn";
 		case 'E':

@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Pending Friend Requests</title>
+<style>
+.myBackground {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/readBlog.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid myBackground">
+	<div class="container">
+    	<h1 class="my-4">Network with people!</h1>
+     	<p>Isn't it nice to meet new people? He is an opportunity to network with people with similar interests and share ideas.</p>
+	</div>
+	<hr>
+	<div class="container" ng-controller="FriendController">
+		<div class="row">
+			<div class="col-lg-4 col-sm-6 text-center mb-4" ng-repeat="(key,value) in pendingRequests">
+         		<img class="rounded-circle img-fluid d-block mx-auto" src="http://localhost:8083/ChatMiddleware/getImage/{{value.loginName}}" alt="Profile picture not available" width="200" height="200"/>
+          		<h3>{{value.loginName}}</h3>
+          		<p><button id="acceptFriend" class="btn btn-success btn-sm" ng-click="acceptFriend(key)">Accept</button>
+          		<button id="rejectFriend" class="btn btn-danger btn-sm" ng-click="rejectFriend(key)">Reject</button></p>
+        	</div>
+		</div>
+	</div>
+</div>					
+</body>
+</html>

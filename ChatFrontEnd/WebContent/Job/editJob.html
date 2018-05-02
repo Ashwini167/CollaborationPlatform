@@ -1,8 +1,24 @@
 <html>
 <head>
 <title>Edit Job</title>
+<style>
+.myBackground{
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/job.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
 </head>
 <body>
+<div class="cotainer-fluid myBackground">
 <div class="container" ng-controller="JobController">
     <form class="form-horizontal" role="form" method="POST">
         <div class="login-box col-md-5 mx-auto w-50">
@@ -43,6 +59,7 @@
 		</div>
 	</div>
 </form>
+</div>
 </div>
 </body>
 </html>

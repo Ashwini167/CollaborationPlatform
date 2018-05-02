@@ -55,70 +55,65 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="#/home">Home</a>
+				<li class="nav-item">
+					<a class="nav-link" href="#/home">Home</a>
 				</li>
-				<li class="nav-item"
-					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+				<li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
 					<a class="nav-link" href="#/login">Login</a>
 				</li>
-				<li class="nav-item"
-					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+				<li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
 					<a class="nav-link" href="#/register">Register</a>
 				</li>
-				<li
-					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+				<li ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
 					<a class="nav-link" href="#/viewBlogs">Read our Blog</a>
 				</li>
-				<li class="nav-item" class="nav-item"
-					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+				<li class="nav-item" class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
 					<a class="nav-link" href="#/viewJobs">Jobs</a>
 				</li>
-				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'"><a
-					class="nav-link" href="#/updateProfile">Update Profile</a></li>
-				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'"><a
-					class="nav-link" href="#/friendsPage">Friends</a></li>
-				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'"><a
-					class="nav-link" href="#/chat">Chat</a></li>
-				<li class="nav-item dropdown"
-					ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
-					<a class="nav-link dropdown-toggle" href="#/viewBlogs"
-					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> Blogs </a>
+				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'">
+					<a class="nav-link" href="#/updateProfile">Update Profile</a>
+				</li>
+				<li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_USER'">
+					<a class="nav-link dropdown-toggle" href="#/friendsPage" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Friends </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#/manageBlogs"
-							ng-show="currentUser.role=='ROLE_ADMIN'">Manage Blogs</a> <a
-							class="dropdown-item" href="#/viewBlogs"
-							ng-show="currentUser.role=='ROLE_USER'">Read Blogs</a> <a
-							class="dropdown-item" href="#/addBlog">Add Blog</a> <a
-							class="dropdown-item" href="#/myBlog">My Blogs</a>
+						<a class="dropdown-item" href="#/viewFriends">View Friends List</a> 
+						<a class="dropdown-item" href="#/friendsPage">View Friend Suggestions</a>
+						<a class="dropdown-item" href="#/pendingList">Pending Friend Requests</a>
+					</div>
+				</li>
+				<li class="nav-item" ng-show="currentUser.role=='ROLE_USER'">
+					<a class="nav-link" href="#/chat">Chat</a>
+				</li>
+				<li class="nav-item dropdown" ng-show="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+					<a class="nav-link dropdown-toggle" href="#/viewBlogs" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Blogs </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="#/manageBlogs" ng-show="currentUser.role=='ROLE_ADMIN'">Manage Blogs</a>
+						<a class="dropdown-item" href="#/viewBlogs" ng-show="currentUser.role=='ROLE_USER'">Read Blogs</a> 
+						<a class="dropdown-item" href="#/addBlog">Add Blog</a> 
+						<a class="dropdown-item" href="#/myBlog">My Blogs</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown" ng-hide="currentUser.role==undefined">
-					<a class="nav-link dropdown-toggle" href="#/viewJobs"
-					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> Job </a>
+					<a class="nav-link dropdown-toggle" href="#/viewJobs" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Job </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="nav-link" href="#/addJob"
-							ng-show="currentUser.role=='ROLE_ADMIN'">Add Job</a> <a
-							class="nav-link" href="#/viewJobs">View Jobs</a> <a
-							class="nav-link" href="#/myAppliedJobs">My Jobs Applications</a>
+						<a class="nav-link" href="#/addJob" ng-show="currentUser.role=='ROLE_ADMIN'">Add Job</a> 
+						<a class="nav-link" href="#/viewJobs">View Jobs</a> 
+						<a class="nav-link" href="#/myAppliedJobs">My Jobs Applications</a>
 					</div>
 				</li>
-				<li class="nav-item"
-					ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
+				<li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">
 					<a class="nav-link" href="#/contactUs">Contact Us</a>
 				</li>
 			</ul>
 			<form ng-controller="UserController">
-				<span class="navbar-text" ng-hide="currentUser==undefined"> <img
+				<span class="navbar-text" ng-hide="currentUser==undefined"> 
+				<img
 					style="border-radius: 30px;"
-					src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}"
+					ng-src="http://localhost:8083/ChatMiddleware/getImage/{{currentUser.loginName}}"
 					onerror="this.src='images/profile.jpg'" alt="Your profile picture"
-					width="50" height="50" /> <font class="my-2 my-sm-0"
-					color="darkgreen">Welcome, {{currentUser.username}}!</font>&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="submit" value="Logout"
-					class="btn btn-sm btn-outline-success my-2 my-sm-0"
-					ng-click="logout()">
+					width="50" height="50" /> 
+				<font class="my-2 my-sm-0" color="darkgreen">Welcome, {{currentUser.username}}! </font>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="Logout" class="btn btn-sm btn-outline-success my-2 my-sm-0"	ng-click="logout()">
 				</span>
 			</form>
 		</div>

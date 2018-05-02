@@ -47,7 +47,7 @@ a {
     <div class="col-sm-6 col-md-4 col-lg-4 " ng-repeat="blog in completeBlogList | filter:{status:'A'}">
   	<div class="card text-white bg-transparent mb-3">
     <div class="card-body">
-      <h4 class="card-title">{{blog.blogName}}</h4>
+      <h4 class="card-title" style="text-decoration: underline;">{{blog.blogName}}</h4>
       <p class="card-text text-truncate">{{blog.blogContent}}</p>
       <button class="btn btn-primary btn-sm" ng-click="readMore(blog.blogId)">Read More</button>
     </div>

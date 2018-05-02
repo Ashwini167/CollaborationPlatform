@@ -24,6 +24,8 @@ myApp.config(function($routeProvider,$locationProvider) {
 					.when("/jobApplied",{templateUrl:"Job/jobApplied.html"})
 					.when("/editJob",{templateUrl:"Job/editJob.html"})
 					.when("/myAppliedJobs",{templateUrl:"Job/myAppliedJobs.html"})
+					.when("/pendingList",{templateUrl:"Friend/pendingFriendRequests.html"})
+					.when("/viewFriends",{templateUrl:"Friend/viewFriends.html"})
 });
 
 myApp.run(function($rootScope,$cookies){

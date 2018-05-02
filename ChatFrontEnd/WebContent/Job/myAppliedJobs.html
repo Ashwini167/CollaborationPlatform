@@ -45,18 +45,22 @@
 <body>
 <div class="cotainer-fluid myBackground">
 <div class="container" ng-controller="JobController">
-<h4 align="center" style="margin-bottom:10px">My Job Applications</h4>
+<h2 align="center" style="margin-bottom:10px">My Job Applications</h2>
 <div id="accordion" close-others=false>
 	<div class="card w-50" ng-repeat="application in appliedJobs">
     <div class="card-header" id="heading{{application.jobApplicationId}}">
       <button class="btn btn-link" data-toggle="collapse" data-target="#{{application.jobApplicationId}}" aria-expanded="true" aria-controls="{{application.jobApplicationId}}">
           {{application.job.jobDesignation}}
       </button>
-      <small style="color: darkgreen; float:right">Status: {{application.status | statusCheck}}</small>
+      <small style="color: darkgreen; float:right">Status: {{application.job.status | statusCheck}}</small>
     </div>
     <div id="{{application.jobApplicationId}}" class="collapse" aria-labelledby="heading{{application.jobApplicationId}}" data-parent="#accordion">
       <div class="card-body">
       <table class="table table-responsive table-condensed">
+      	<tr>
+      		<td>Application ID</td>
+      		<td>{{application.jobApplicationId}}</td>
+      	</tr>
       	<tr>
       		<td>Company</td>
       		<td>{{application.job.company}}</td>
@@ -83,7 +87,7 @@
       	</tr>
       	<tr class="info">
       		<td>Current Status</td>
-      		<td>{{application.status | statusCheck}}</td>
+      		<td>{{application.job.status | statusCheck}}</td>
       	</tr>	
       </table>
       </div>

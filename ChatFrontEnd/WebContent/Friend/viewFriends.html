@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>My Friends</title>
+</head>
+<body>
+	<div class="container">
+    	<h1 class="my-4">Network with people!</h1>
+     	<p>Isn't it nice to meet new people? He is an opportunity to network with people with similar interests and share ideas.</p>
+     	<p>You have made a good amount of friends!</p>
+	</div>
+<hr>
+	<div class="container" ng-controller="FriendController">
+		<div class="row">
+			<div class="col-lg-4 col-sm-6 text-center mb-4" ng-repeat="friend in friendList">
+			<div ng-if="friend.requestor.loginName!=currentUser.loginName">
+         		<img class="rounded-circle img-fluid d-block mx-auto" src="http://localhost:8083/ChatMiddleware/getImage/{{friend.requestor.loginName}}" alt="Profile picture not available" width="200" height="200"/>
+          		<h3>{{friend.requestor.loginName}}</h3>
+          	</div>
+          	<div ng-if="friend.friend.loginName!=currentUser.loginName">
+         		<img class="rounded-circle img-fluid d-block mx-auto" src="http://localhost:8083/ChatMiddleware/getImage/{{friend.friend.loginName}}" alt="Profile picture not available" width="200" height="200"/>
+          		<h3>{{friend.friend.loginName}}</h3>
+          	</div>
+        	</div>
+		</div>
+	</div>				
+</body>
+</html>

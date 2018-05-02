@@ -1,11 +1,30 @@
 <html>
 <head>
 <title>Applied Successfully!</title>
+<style>
+
+.myBackground{
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/job.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+</style>
 </head>
 <body>
-	<div class="container" ng-controller="JobController">
+	<div class="container-fluid myBackground">
+	<div class="container text-white" ng-controller="JobController">
 		<h4>You have successfully applied for the job. The application Id is {{applicationId}}.</h4>
 		<p><a href="#/viewJobs">View More Jobs</a>
+	</div>
 	</div>
 </body>
 </html>
