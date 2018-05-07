@@ -98,7 +98,7 @@
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="nav-link" href="#/addJob" ng-show="currentUser.role=='ROLE_ADMIN'">Add Job</a> 
 						<a class="nav-link" href="#/viewJobs">View Jobs</a> 
-						<a class="nav-link" href="#/myAppliedJobs">My Jobs Applications</a>
+						<a class="nav-link" href="#/myAppliedJobs" ng-show="currentUser.role=='ROLE_USER'">My Jobs Applications</a>
 					</div>
 				</li>
 				<li class="nav-item" ng-hide="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_USER'">

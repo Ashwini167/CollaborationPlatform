@@ -1,8 +1,24 @@
 <html>
 <head>
 <title>Suggested Friends</title>
+<style>
+.myBackground {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("images/readBlog.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
 </head>
 <body>
+	<div class="container-fluid myBackground">
 	<div class="container">
     	<h1 class="my-4">Network with people!</h1>
      	<p>Isn't it nice to meet new people? He is an opportunity to network with people with similar interests and share ideas.</p>
@@ -16,6 +32,7 @@
           		<p><button id="addFriend" class="btn btn-success btn-sm" ng-click="addFriend(friend.loginName)">Add Friend</button></p>
         	</div>
 		</div>
+	</div>
 	</div>				
 </body>
 </html>
