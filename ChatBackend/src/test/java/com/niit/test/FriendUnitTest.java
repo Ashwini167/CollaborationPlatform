@@ -54,7 +54,7 @@ public class FriendUnitTest {
 	@Ignore
 	@Test
 	public void viewFriendRequestsTest() {
-		Map<Integer, UserDetail> friendRequests = friendDAO.viewFriendRequests("Subha");
+		Map<Integer, UserDetail> friendRequests = friendDAO.viewFriendRequests("Sathish");
 		System.out.println("Requested friends are ");
 		for(Map.Entry<Integer,UserDetail> entry : friendRequests.entrySet()) {
 			System.out.println(entry.getKey()+"::::"+entry.getValue().getLoginName());
@@ -76,6 +76,7 @@ public class FriendUnitTest {
 		assertTrue("Problem in rejecting friend request",friendDAO.rejectFriend(frnd));
 	}
 	
+	@Ignore
 	@Test
 	public void viewFriendsListTest() {
 		List<Friend> friendsList = friendDAO.viewFriendsList("Subha");
@@ -86,10 +87,11 @@ public class FriendUnitTest {
 		assertNotNull("Problem in retrieving friends list",friendsList);
 	}
 	
-	@Ignore
+	
 	@Test
 	public void viewSuggestedFriendsTest() {
 		List<UserDetail> suggestedFriends = friendDAO.viewSuggestedFriends("Anu");
+		System.out.println("Size of the list: "+suggestedFriends.size());
 		System.out.println("Suggested friends: ");
 		for(UserDetail user:suggestedFriends) {
 			System.out.println(user.getLoginName());
